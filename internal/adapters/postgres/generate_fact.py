@@ -1,9 +1,9 @@
-from internal.domain.entities.fact import Fact
-
 import psycopg2
 import os
+from internal.domain.entities.fact import Fact
+from internal.domain.repositories.fact import FactRepository
 
-class RandomFactService:
+class PostgresFactRepository(FactRepository):
     def __init__(self):
         self.conn = psycopg2.connect(
             dbname=os.getenv("POSTGRES_DB", "factsdb"),
@@ -13,7 +13,8 @@ class RandomFactService:
             port=os.getenv("POSTGRES_PORT", "5432")
         )
 
-    def generate(self) -> str:
+# TASK
+    def get_random_fact(self) -> Fact:
         with self.conn.cursor() as cur:
             cur.execute("SELECT id, fact FROM facts ORDER BY RANDOM() LIMIT 1;")
             result = cur.fetchone()

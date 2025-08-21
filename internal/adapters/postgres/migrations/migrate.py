@@ -1,0 +1,31 @@
+import psycopg2
+import os
+
+conn = psycopg2.connect(
+    dbname=os.getenv("POSTGRES_DB", "factsdb"),
+    user=os.getenv("POSTGRES_USER", "postgres"),
+    password=os.getenv("POSTGRES_PASSWORD", "password"),
+    host=os.getenv("POSTGRES_HOST", "localhost"),
+    port=os.getenv("POSTGRES_PORT", "5432")
+)
+
+with conn:
+    with conn.cursor() as cur:
+        cur.execute("""
+            CREATE TABLE IF NOT EXISTS facts (
+                id SERIAL PRIMARY KEY,
+                fact TEXT NOT NULL
+            );
+        """)
+        cur.execute("""
+            INSERT INTO facts (fact) VALUES
+            ('Honey never spoils.'),
+            ('Bananas are berries.'),
+            ('Octopuses have three hearts.'),
+            ('A group of flamingos is called a "flamboyance".'),
+            ('The Eiffel Tower can be 15 cm taller during hot days.')
+            ON CONFLICT DO NOTHING;
+        """)
+    print("Migration complete: facts table created and sample data inserted.")
+
+conn.close()
