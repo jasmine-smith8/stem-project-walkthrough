@@ -1,11 +1,24 @@
-# TASK
 <!DOCTYPE html>
 <html>
 <head>
     <title>Random Fact Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-    <h1>Random Fact Generator</h1>
-    <p>Your random fact is: <strong>{{ random_fact }}</strong></p>
+    <div class="generate-container">
+        <!-- Navbar -->
+        {% include './partials/navbar.html' %}
+
+        <div class="main-container">
+            <h1>Random Fact Generator</h1>
+            <div class="fact-container">
+                <p>Your random fact is: </p>
+                <strong>{{ random_fact }}</strong>
+            </div>
+            <a href="/generate">
+                <button class="fact-generator-button">New Fact</button>
+            </a>
+        </div>
+    </div>
 </body>
 </html>
