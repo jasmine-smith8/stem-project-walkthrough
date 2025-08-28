@@ -1,14 +1,24 @@
-# TODO: Needs work, can flesh this out to look like a pretty home page (and serve as an example for the first few tasks)
 <!DOCTYPE html>
 <html>
 <head>
     <title>Work Experience 2026 Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-    <h1>Welcome to the home of Work Experience Project 2026!</h1>
-    <p>Click below to visit the random fact generator.</p>
-    <a href="/generate">
-        <button>Fact Generator</button>
-    </a>
+    <div class="home-container">
+        <!-- Navbar -->
+        {% include './partials/navbar.html' %}
+
+        <div class="main-container">
+            <h1>Welcome to the home of the Work Experience Project 2026!</h1>
+            <p>Click below to visit the random fact generator.</p>
+            <a href="/generate">
+                <button class="fact-generator-button">Fact Generator</button>
+            </a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    {% include './partials/footer.html' %}
 </body>
 </html>
