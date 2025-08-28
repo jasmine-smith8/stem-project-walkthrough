@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Work Experience 2026 Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="home-container">
+        <!-- Navbar -->
+        {% include './partials/navbar.html' %}
+
+        <div class="main-container">
+            <h1>Welcome to the home of the Work Experience Project 2026!</h1>
+            <p>Click below to visit the random fact generator.</p>
+            <a href="/generate">
+                <button class="fact-generator-button">Fact Generator</button>
+            </a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    {% include './partials/footer.html' %}
+</body>
+</html>
