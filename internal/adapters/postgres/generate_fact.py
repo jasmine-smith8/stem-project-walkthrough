@@ -22,3 +22,12 @@ class PostgresFactRepository(FactRepository):
                 return Fact(id=result[0], fact=result[1])
             else:
                 return Fact(id=None, fact="No facts found.")
+# TASK
+    def add_fact(self, fact_text: str) -> Fact:
+        with self.conn.cursor() as cur:
+            cur.execute(
+                "INSERT INTO facts (fact) VALUES (%s) RETURNING id, fact;",
+                (fact_text,)
+            )
+            result = cur.fetchone()
+            return Fact(id=result[0], fact=result[1])
