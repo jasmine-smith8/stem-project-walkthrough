@@ -30,4 +30,5 @@ class PostgresFactRepository(FactRepository):
                 (fact_text,)
             )
             result = cur.fetchone()
+            self.conn.commit()
             return Fact(id=result[0], fact=result[1])
