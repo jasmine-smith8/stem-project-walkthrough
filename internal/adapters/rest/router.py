@@ -8,7 +8,7 @@ def create_app():
                 static_folder='../../../static')
     app.add_url_rule("/", view_func=home_route, methods=["GET"])
     app.add_url_rule("/generate", view_func=generate_route, methods=["GET"]) # TASK
-    app.add_url_rule("/create", view_func=create_route, methods=["POST"]) # TASK
+    app.add_url_rule("/create", view_func=create_route, methods=["GET","POST"]) # TASK
 
     # Print all registered routes
     print("Registered routes:")
