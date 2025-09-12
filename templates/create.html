@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create a New Fact</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="main-container">
+        <h1>Create a New Fact</h1>
+        <form action="/create" method="POST">
+            <textarea name="fact_text" placeholder="Enter your fact here..." required></textarea>
+            <button type="submit" class="fact-generator-button">Submit</button>
+        </form>
+        {% if random_fact %}
+        <div class="fact-container">
+            <p>New fact created:</p>
+            <strong>{{ random_fact }}</strong>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
