@@ -5,18 +5,29 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-    <div class="main-container">
-        <h1>Create a New Fact</h1>
-        <form action="/create" method="POST">
-            <textarea name="fact_text" placeholder="Enter your fact here..." required></textarea>
-            <button type="submit" class="fact-generator-button">Submit</button>
-        </form>
-        {% if random_fact %}
-        <div class="fact-container">
-            <p>New fact created:</p>
-            <strong>{{ random_fact }}</strong>
+    <div class="page-container create-container">
+        <!-- Navbar -->
+        {% include './partials/navbar.html' %}
+
+        <div class="main-container">
+            <h1>Create a New Fact</h1>
+            <div class="create-fact-container">
+                <form action="/create" method="POST">
+                    <textarea name="fact_text" placeholder="Enter your fact here..." required></textarea>
+                    <button type="submit" class="fact-generator-button">Submit</button>
+                </form>
+            </div>
+
+            {% if random_fact %}
+            <div class="fact-container">
+                <p>New fact created:</p>
+                <strong>{{ random_fact }}</strong>
+            </div>
+            {% endif %}
         </div>
-        {% endif %}
+
+        <!-- Footer -->
+        {% include './partials/footer.html' %}
     </div>
 </body>
 </html>

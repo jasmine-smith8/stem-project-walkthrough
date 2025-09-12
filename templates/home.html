@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-    <div class="home-container">
+    <div class="page-container home-container">
         <!-- Navbar -->
         {% include './partials/navbar.html' %}
 
@@ -16,9 +16,9 @@
                 <button class="fact-generator-button">Fact Generator</button>
             </a>
         </div>
-    </div>
 
-    <!-- Footer -->
-    {% include './partials/footer.html' %}
+        <!-- Footer -->
+        {% include './partials/footer.html' %}
+    </div>
 </body>
 </html>
