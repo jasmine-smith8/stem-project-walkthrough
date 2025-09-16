@@ -11,7 +11,8 @@
 
         <div class="main-container">
             <h1>Create a New Fact</h1>
-            <div class="create-fact-container">
+
+            <div class="create-fact-container" id="createForm">
                 <form action="/create" method="POST">
                     <textarea name="fact_text" placeholder="Enter your fact here..." required></textarea>
                     <button type="submit" class="fact-generator-button">Submit</button>
@@ -19,9 +20,12 @@
             </div>
 
             {% if random_fact %}
-            <div class="fact-container">
-                <p>New fact created:</p>
-                <strong>{{ random_fact }}</strong>
+            <div id="factDisplay">
+                <div class="fact-container">
+                    <p>New fact created:</p>
+                    <strong>{{ random_fact }}</strong>
+                </div>
+                <button type="button" class="fact-generator-button" onclick="showCreateForm()">Create New Fact</button>
             </div>
             {% endif %}
         </div>
@@ -29,5 +33,29 @@
         <!-- Footer -->
         {% include './partials/footer.html' %}
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const factDisplay = document.getElementById('factDisplay');
+            const createForm = document.getElementById('createForm');
+
+            if (factDisplay) {
+                createForm.style.display = 'none';
+                factDisplay.style.display = 'block';
+            }
+        });
+
+        function showCreateForm() {
+            const factDisplay = document.getElementById('factDisplay');
+            const createForm = document.getElementById('createForm');
+            const textarea = createForm.querySelector('textarea');
+
+            factDisplay.style.display = 'none';
+            createForm.style.display = 'block';
+
+            textarea.value = '';
+            textarea.focus();
+        }
+    </script>
 </body>
 </html>

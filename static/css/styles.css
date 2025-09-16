@@ -132,7 +132,7 @@ body {
 .main-container {
     text-align: center;
     display: flex;
-    margin: 20vh 0;
+    margin: 25vh 0;
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
@@ -223,24 +223,22 @@ body {
     color: #1d1717;
 }
 
+.fact-container + button {
+    margin-top: 2rem;
+}
+
 .create-fact-container {
     padding: 3rem 0;
     transition: all 0.3s ease;
     animation: fadeInUp var(--animation-duration) ease-out 0.9s both;
-}
-
-.create-fact-container form {
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
-    gap: 5rem;
-    max-width: 800px;
-    margin: 0 auto;
+    width: 100%;
 }
 
 .create-fact-container textarea {
     flex: 1;
-    height: 100px;
+    height: 150px;
+    width: 80%;
+    max-width: 600px;
     padding: 15px;
     font-size: 1.1rem;
     border: 2px solid #292121;
@@ -248,6 +246,17 @@ body {
     font-family: 'Inter', sans-serif;
     transition: all 0.3s ease;
     resize: none;
+    background-color: rgba(241, 241, 241, 0.9);
+    backdrop-filter: blur(50px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    margin: 0 auto 2rem auto;
+    display: block;
+}
+
+.create-fact-container textarea::placeholder {
+    color: #776767;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
 }
 
 .create-fact-container .fact-generator-button {
@@ -267,7 +276,7 @@ footer {
     background: linear-gradient(135deg, #f8f9fa, #e9ecef);
     padding: 30px 0;
     text-align: center;
-    position: relative;
+    position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
