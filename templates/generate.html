@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-    <div class="generate-container">
+    <div class="page-container generate-container">
         <!-- Navbar -->
         {% include './partials/navbar.html' %}
 
@@ -13,15 +13,48 @@
             <h1>Random Fact Generator</h1>
             <div class="fact-container">
                 <p>Your random fact is: </p>
-                <strong>{{ random_fact }}</strong>
+                <strong id="fact-text">{{ random_fact }}</strong>
             </div>
-            <a href="/generate">
-                <button class="fact-generator-button">New Fact</button>
-            </a>
+            <button class="fact-generator-button" onclick="getNewFact()">
+                <span id="button-text">New Fact</span>
+            </button>
         </div>
 
         <!-- Footer -->
         {% include './partials/footer.html' %}
     </div>
+
+    <script>
+        async function getNewFact() {
+            const button = document.querySelector('.fact-generator-button');
+            const buttonText = document.getElementById('button-text');
+            const factText = document.getElementById('fact-text');
+
+            // Show loading state
+            buttonText.textContent = 'Loading...';
+            button.disabled = true;
+
+            try {
+                const response = await fetch('/api/generate-fact');
+                const data = await response.json();
+
+                // Add a small fade effect
+                factText.style.opacity = '0.5';
+
+                setTimeout(() => {
+                    factText.textContent = data.fact;
+                    factText.style.opacity = '1';
+                }, 200);
+
+            } catch (error) {
+                console.error('Error fetching new fact:', error);
+                factText.textContent = 'Sorry, could not load a new fact. Please try again.';
+            } finally {
+                // Reset button state
+                buttonText.textContent = 'New Fact';
+                button.disabled = false;
+            }
+        }
+    </script>
 </body>
 </html>
