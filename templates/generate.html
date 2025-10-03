@@ -35,7 +35,10 @@
             button.disabled = true;
 
             try {
-                const response = await fetch('/api/generate-fact');
+                // Call /generate expecting JSON when json=1 query param is present
+                const response = await fetch('/generate?json=1', {
+                    headers: { 'Accept': 'application/json' }
+                });
                 const data = await response.json();
 
                 // Add a small fade effect
