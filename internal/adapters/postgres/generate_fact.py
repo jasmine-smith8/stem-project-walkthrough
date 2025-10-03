@@ -16,19 +16,19 @@ class PostgresFactRepository(FactRepository):
 # TASK
     def get_random_fact(self) -> Fact:
         with self.conn.cursor() as cur:
-            cur.execute("SELECT id, fact FROM facts ORDER BY RANDOM() LIMIT 1;")
+            cur.execute("SELECT id, fact, category FROM facts ORDER BY RANDOM() LIMIT 1;")
             result = cur.fetchone()
             if result:
-                return Fact(id=result[0], fact=result[1])
+                return Fact(id=result[0], fact=result[1], category=result[2])
             else:
-                return Fact(id=None, fact="No facts found.")
+                return Fact(id=None, fact="No facts found.", category="none")
 # TASK
-    def add_fact(self, fact_text: str) -> Fact:
+    def add_fact(self, fact_text: str, category: str) -> Fact:
         with self.conn.cursor() as cur:
             cur.execute(
-                "INSERT INTO facts (fact) VALUES (%s) RETURNING id, fact;",
-                (fact_text,)
+                "INSERT INTO facts (fact, category) VALUES (%s, %s) RETURNING id, fact, category;",
+                (fact_text, category)
             )
             result = cur.fetchone()
             self.conn.commit()
-            return Fact(id=result[0], fact=result[1])
+            return Fact(id=result[0], fact=result[1], category=result[2])
