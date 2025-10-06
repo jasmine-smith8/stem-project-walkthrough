@@ -272,6 +272,48 @@ body {
     box-shadow: 0 0 10px rgba(73, 59, 59, 0.5);
 }
 
+.voting-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.vote-button {
+    border-radius: 50%;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.vote-button:hover {
+    transform: scale(1.1);
+}
+
+.vote-icon {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+}
+
+.dislike-button{
+    transform: rotate(180deg);
+}
+
+.dislike-button:hover {
+    transform: scale(1.1) rotate(180deg);
+}
+.vote-count {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #1d1717;
+    min-width: 30px;
+    text-align: center;
+}
+
+
 footer {
     background: linear-gradient(135deg, #f8f9fa, #e9ecef);
     padding: 30px 0;

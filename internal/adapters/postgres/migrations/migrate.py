@@ -14,7 +14,9 @@ with conn:
         cur.execute("""
             CREATE TABLE IF NOT EXISTS facts (
                 id SERIAL PRIMARY KEY,
-                fact TEXT NOT NULL
+                fact TEXT NOT NULL,
+                likes INT DEFAULT 0,
+                dislikes INT DEFAULT 0
             );
         """)
         cur.execute("""

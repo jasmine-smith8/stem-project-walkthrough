@@ -26,3 +26,17 @@ def create_route():
             return "Fact text is required", 400
         fact_create_entity = random_service.create(fact_text)
         return render_template("create.html", random_fact=fact_create_entity.fact)
+
+# TASK
+def vote_route():
+    if request.method == "POST":
+        fact_id = request.form.get("fact_id")
+        vote_type = request.form.get("vote_type")  # 'like' or 'dislike'
+        if not fact_id or vote_type not in ["like", "dislike"]:
+            return "Invalid input", 400
+        if vote_type == "like":
+            repository.increment_likes(int(fact_id))
+        else:
+            repository.increment_dislikes(int(fact_id))
+        return "Vote recorded", 200
+    return "Method not allowed", 405

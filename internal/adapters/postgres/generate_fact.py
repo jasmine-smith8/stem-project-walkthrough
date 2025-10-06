@@ -32,3 +32,21 @@ class PostgresFactRepository(FactRepository):
             result = cur.fetchone()
             self.conn.commit()
             return Fact(id=result[0], fact=result[1])
+        
+# TASK
+def increment_likes(self, fact_id: int) -> None:
+    with self.conn.cursor() as cur:
+        cur.execute(
+            "UPDATE facts SET likes = likes + 1 WHERE id = %s;",
+            (fact_id,)
+        )
+        self.conn.commit()
+
+# TASK
+def increment_dislikes(self, fact_id: int) -> None:
+    with self.conn.cursor() as cur:
+        cur.execute(
+            "UPDATE facts SET dislikes = dislikes + 1 WHERE id = %s;",
+            (fact_id,)
+        )
+        self.conn.commit()
