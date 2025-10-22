@@ -12,6 +12,7 @@ conn = psycopg2.connect(
 with conn:
     with conn.cursor() as cur:
         cur.execute("""
+            DROP TABLE IF EXISTS facts;
             CREATE TABLE IF NOT EXISTS facts (
                 id SERIAL PRIMARY KEY,
                 fact TEXT NOT NULL,

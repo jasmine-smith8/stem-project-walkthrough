@@ -12,21 +12,25 @@
         <div class="main-container">
             <h1>Random Fact Generator</h1>
             <div class="fact-container">
-                <p>Your random fact is: </p>
-                <strong id="fact-text">{{ random_fact }}</strong>
+            <p>Your random fact is: </p>
+            <strong id="fact-text">{{ random_fact }}</strong>
             </div>
             <div class="voting-container">
+            <div class="vote-section">
                 <button class="vote-button like-button" onclick="vote('like', '{{ random_fact_id }}')">
-                    <img src="{{ url_for('static', filename='images/thumbs-up.jpg') }}" alt="Like" class="vote-icon">
+                <img src="{{ url_for('static', filename='images/thumbs-up.jpg') }}" alt="Like" class="vote-icon">
                 </button>
-                <span id="like-count-{{ random_fact_id }}">{{ random_fact_likes }}</span>
+                <span id="like-count-{{ random_fact_id }}" class="vote-count">{{ random_fact_likes }}</span>
+            </div>
+            <div class="vote-section">
                 <button class="vote-button dislike-button" onclick="vote('dislike', '{{ random_fact_id }}')">
-                    <img src="{{ url_for('static', filename='images/thumbs-up.jpg') }}" alt="Dislike" class="vote-icon">
+                <img src="{{ url_for('static', filename='images/thumbs-up.jpg') }}" alt="Dislike" class="vote-icon">
                 </button>
-                <span id="dislike-count-{{ random_fact_id }}">{{ random_fact_dislikes }}</span>
+                <span id="dislike-count-{{ random_fact_id }}" class="vote-count">{{ random_fact_dislikes }}</span>
+            </div>
             </div>
             <button class="fact-generator-button" onclick="getNewFact()">
-                <span id="button-text">New Fact</span>
+            <span id="button-text">New Fact</span>
             </button>
         </div>
 
@@ -39,23 +43,44 @@
             const button = document.querySelector('.fact-generator-button');
             const buttonText = document.getElementById('button-text');
             const factText = document.getElementById('fact-text');
-
+            
             // Show loading state
             buttonText.textContent = 'Loading...';
             button.disabled = true;
-
+            
             try {
                 const response = await fetch('/api/generate-fact');
-                const data = await response.json();
-
+                let data;
+                try {
+                    data = await response.json();
+                } catch (parseError) {
+                    console.error('Error parsing JSON response:', parseError);
+                    return;
+                }
+                
                 // Add a small fade effect
                 factText.style.opacity = '0.5';
-
                 setTimeout(() => {
                     factText.textContent = data.fact;
                     factText.style.opacity = '1';
+                    
+                    // Update voting counts and button attributes for the new fact
+                    const likeButton = document.querySelector('.like-button');
+                    const dislikeButton = document.querySelector('.dislike-button');
+                    const likeCount = document.querySelector('[id^="like-count-"]');
+                    const dislikeCount = document.querySelector('[id^="dislike-count-"]');
+                    
+                    // Update the onclick attributes with new fact ID
+                    likeButton.setAttribute('onclick', `vote('like', '${data.id}')`);
+                    dislikeButton.setAttribute('onclick', `vote('dislike', '${data.id}')`);
+                    
+                    // Update the count element IDs and values
+                    likeCount.id = `like-count-${data.id}`;
+                    likeCount.textContent = data.likes;
+                    dislikeCount.id = `dislike-count-${data.id}`;
+                    dislikeCount.textContent = data.dislikes;
+                    
                 }, 200);
-
             } catch (error) {
                 console.error('Error fetching new fact:', error);
                 factText.textContent = 'Sorry, could not load a new fact. Please try again.';
@@ -71,14 +96,20 @@
             const url = '/api/vote';
             const likeCount = document.getElementById(`like-count-${factId}`);
             const dislikeCount = document.getElementById(`dislike-count-${factId}`);
-    
+
             try {
                 const response = await fetch(url, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ fact_id: factId, vote_type: type })
                 });
-    
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    console.error('Error voting:', errorData.error);
+                    return;
+                }
+
                 const data = await response.json();
                 if (type === 'like') {
                     likeCount.textContent = data.new_count;

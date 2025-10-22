@@ -10,3 +10,9 @@ class RandomFactService:
     
     def create(self, fact_text: str) -> Fact:
         return self.repository.add_fact(fact_text)
+    
+    def like_fact(self, fact_id: int) -> None:
+        self.repository.increment_likes(fact_id)
+
+    def dislike_fact(self, fact_id: int) -> None:
+        self.repository.increment_dislikes(fact_id)
