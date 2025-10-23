@@ -15,4 +15,4 @@ def get_route():
             "fact": fact_entity.fact,
             "category": getattr(fact_entity, "category", None)
         })
-    return render_template("generate.html", random_fact=fact_entity.fact)
+    return render_template("generate.html", random_fact=fact_entity.fact, category=fact_entity.category)

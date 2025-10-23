@@ -12,7 +12,7 @@
         <div class="main-container">
             <h1>Random Fact Generator</h1>
             <div class="fact-container">
-                <p>Your random fact is: </p>
+                <p>Your random <strong id="fact-text">{{ category }}</strong> fact is: </p>
                 <strong id="fact-text">{{ random_fact }}</strong>
             </div>
             <button class="fact-generator-button" onclick="getNewFact()">
@@ -46,6 +46,8 @@
 
                 setTimeout(() => {
                     factText.textContent = data.fact;
+                    const categoryEl = document.getElementById('fact-category');
+                    if (categoryEl) categoryEl.textContent = data.category || 'Uncategorized';
                     factText.style.opacity = '1';
                 }, 200);
 
