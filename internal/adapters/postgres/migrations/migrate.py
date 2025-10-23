@@ -12,18 +12,20 @@ conn = psycopg2.connect(
 with conn:
     with conn.cursor() as cur:
         cur.execute("""
+            DROP TABLE IF EXISTS facts;
             CREATE TABLE IF NOT EXISTS facts (
                 id SERIAL PRIMARY KEY,
-                fact TEXT NOT NULL
+                fact TEXT NOT NULL,
+                category TEXT NOT NULL
             );
         """)
         cur.execute("""
-            INSERT INTO facts (fact) VALUES
-            ('Honey never spoils.'),
-            ('Bananas are berries.'),
-            ('Octopuses have three hearts.'),
-            ('A group of flamingos is called a "flamboyance".'),
-            ('The Eiffel Tower can be 15 cm taller during hot days.')
+            INSERT INTO facts (fact, category) VALUES
+            ('Honey never spoils.', 'food'),
+            ('Bananas are berries.', 'food'),
+            ('Octopuses have three hearts.', 'animal'),
+            ('A group of flamingos is called a "flamboyance".', 'animal'),
+            ('The Eiffel Tower can be 15 cm taller during hot days.', 'architecture')
             ON CONFLICT DO NOTHING;
         """)
     print("Migration complete: facts table created and sample data inserted.")
