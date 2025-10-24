@@ -17,7 +17,7 @@ with conn:
                 id SERIAL PRIMARY KEY,
                 fact TEXT NOT NULL,
                 likes INT DEFAULT 0,
-                dislikes INT DEFAULT 0
+                dislikes INT DEFAULT 0,
                 category TEXT NOT NULL
             );
         """)

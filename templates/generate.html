@@ -98,6 +98,10 @@
     </script>
     <script>
         async function vote(type, factId) {
+            if (!factId) {
+                console.error('No fact ID provided');
+                return;
+            }
             const url = '/api/vote';
             const likeCount = document.getElementById(`like-count-${factId}`);
             const dislikeCount = document.getElementById(`dislike-count-${factId}`);

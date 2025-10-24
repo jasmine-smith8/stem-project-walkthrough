@@ -2,6 +2,7 @@ from flask import Flask
 from .home import home_route
 from .get_fact import get_route
 from .create_fact import create_route
+from .vote_fact import vote_route
 
 def create_app():
     app = Flask(__name__,
