@@ -7,4 +7,3 @@ class GetFactUseCase:
 
     def get_fact(self) -> Fact:
         return self.repository.get_fact()
-
