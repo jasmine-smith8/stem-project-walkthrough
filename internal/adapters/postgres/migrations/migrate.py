@@ -18,15 +18,16 @@ with conn:
                 fact TEXT NOT NULL,
                 likes INT DEFAULT 0,
                 dislikes INT DEFAULT 0
+                category TEXT NOT NULL
             );
         """)
         cur.execute("""
-            INSERT INTO facts (fact) VALUES
-            ('Honey never spoils.'),
-            ('Bananas are berries.'),
-            ('Octopuses have three hearts.'),
-            ('A group of flamingos is called a "flamboyance".'),
-            ('The Eiffel Tower can be 15 cm taller during hot days.')
+            INSERT INTO facts (fact, category) VALUES
+            ('Honey never spoils.', 'food'),
+            ('Bananas are berries.', 'food'),
+            ('Octopuses have three hearts.', 'animal'),
+            ('A group of flamingos is called a "flamboyance".', 'animal'),
+            ('The Eiffel Tower can be 15 cm taller during hot days.', 'architecture')
             ON CONFLICT DO NOTHING;
         """)
     print("Migration complete: facts table created and sample data inserted.")

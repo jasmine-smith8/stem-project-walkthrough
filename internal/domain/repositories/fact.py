@@ -1,11 +1,11 @@
 from internal.domain.entities.fact import Fact
 
 class FactRepository:
-    def get_random_fact(self) -> Fact:
-        raise NotImplementedError
+    def get_fact(self) -> Fact:
+        pass
     
-    def add_fact(self, fact_text: str) -> Fact:
-        raise NotImplementedError
+    def create_fact(self, fact_text: str, category: str) -> Fact:
+        pass
     
     def increment_likes(self, fact_id: int) -> None:
         raise NotImplementedError
@@ -21,3 +21,4 @@ class FactRepository:
 
     def get_fact_by_id(self, fact_id: int) -> Fact:
         raise NotImplementedError
+
