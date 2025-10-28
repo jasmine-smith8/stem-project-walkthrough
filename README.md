@@ -7,7 +7,7 @@ Work in progress...
 ## To setup the database
 1. Run ```make docker-compose``` to bring up the postgres container.
 
-2. Run ``` make setup-db``` to create a facts table in the database and insert some sample data.
+2. Run ```make setup-db``` to create a facts table in the database and insert some sample data.
 
 3. Run ```make db-shell``` to enter the database shell (useful for debugging purposes).
 
