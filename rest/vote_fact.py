@@ -1,9 +1,5 @@
-from flask import render_template, jsonify, request
-from ..postgres.vote_fact import PostgresFactRepository
-from ...usecases.vote_fact import VoteFactUseCase
-
-repository = PostgresFactRepository()
-usecase = VoteFactUseCase(repository)
+from flask import jsonify, request
+from database import vote_fact
 
 def vote_route():
     data = request.json
@@ -11,7 +7,7 @@ def vote_route():
     vote_type = data.get("vote_type")
 
     try:
-        updated_fact = usecase.vote_fact(fact_id, vote_type)
+        updated_fact = vote_fact(fact_id, vote_type)
         
         new_count = updated_fact.likes if vote_type == 'like' else updated_fact.dislikes
         

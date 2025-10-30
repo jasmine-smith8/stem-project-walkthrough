@@ -6,7 +6,7 @@ docker-compose:
 ## setup-db: Set up the database.
 .PHONY: setup-db
 setup-db:
-	python3 internal/adapters/postgres/migrations/migrate.py
+	python3 database/migrations/migrate.py
 
 ## db-shell: Enter the facts database.
 .PHONY: db-shell
