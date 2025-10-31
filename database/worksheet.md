@@ -29,6 +29,8 @@ Visit https://www.w3schools.com/sql/default.asp to explore the basics of SQL (hi
 Using the following example ‘Customers’ table in the database
  
 
+![Customers Table](../worksheet_images/customers_table.png)
+
 Write queries to:
 
 1)	Select all columns from the ‘Customers’ table
