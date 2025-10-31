@@ -5,7 +5,7 @@
 2. `GET /books/42`
 3. `POST /books`
 4. `PUT /books/42` or `PATCH /books/42`
-4. `DELETE /books/42`
+5. `DELETE /books/42`
 6. `GET /authors/{authorId}/books` or `GET /books?author={authorName}`
 ### Exercise 2
 - View your profile: **GET**
