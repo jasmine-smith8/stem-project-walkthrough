@@ -3,7 +3,7 @@
 ### Exercise 1
 1. `GET /books`
 2. `GET /books/42`
-2. `POST /books`
+3. `POST /books`
 3. `PUT /books/42` or `PATCH /books/42`
 4. `DELETE /books/42`
 5. `GET /authors/{authorId}/books` or `GET /books?author={authorName}`
