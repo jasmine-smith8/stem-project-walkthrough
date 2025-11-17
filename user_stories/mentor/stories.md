@@ -1,6 +1,6 @@
 ## User Stories
 
-### P0: Random Fun Fact Generator
+# P0: Random Fun Fact Generator
 As an engineer, I want to be able to get a random fun fact from a database, so that I can share them with my team.
 
 ---
@@ -53,7 +53,6 @@ def get_fact() -> Fact:
 ### REST Router
 #### Steps:
 1. Add a `generate` route with a `GET` method to `router.py`.
-2. Visit `/generate` on localhost to see a fact.
 
 ```python
 from flask import Flask
@@ -73,6 +72,171 @@ def create_app():
         print(f"{rule} -> {rule.methods}")
     return app
 ```
+2. Visit `/generate` on localhost to see a fact.
+
+```
+{
+    "fact": "Honey never spoils."
+}
+```
+---
+
+### Unit Tests
+1. Add unit tests to cover the generate fact logic.
+2. Place tests in the same directory as the original file, following the convention `filename_test.py`.
+3. Reference the given happy path & unit test guide located in the same folder and encourage students to think about negative cases to improve test coverage.
+
+---
+
+### HTML Integration
+1. Add HTML to present the fact nicely.
+
+In `templates/generate.html`:
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Random Fact Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="page-container generate-container">
+        <!-- Navbar -->
+        {% include './partials/navbar.html' %}
+
+        <div class="main-container">
+            <h1>Random Fact Generator</h1>
+            <div class="fact-container">
+                <p>Your random fact is: </p>
+                <strong id="fact-text">{{ random_fact }}</strong>
+            </div>
+            <button class="fact-generator-button" onclick="getNewFact()">
+            <span id="button-text">New Fact</span>
+            </button>
+        </div>
+
+        <!-- Footer -->
+        {% include './partials/footer.html' %}
+    </div>
+
+    <script>
+        async function getNewFact() {
+            const button = document.querySelector('.fact-generator-button');
+            const buttonText = document.getElementById('button-text');
+            const factText = document.getElementById('fact-text');
+            
+            // Show loading state
+            buttonText.textContent = 'Loading...';
+            button.disabled = true;
+            
+            try {
+                // Call /generate expecting JSON when json=1 query param is present
+                const response = await fetch('/generate?json=1', {
+                    headers: { 'Accept': 'application/json' }
+                });
+                let data;
+                try {
+                    data = await response.json();
+                } catch (parseError) {
+                    console.error('Error parsing JSON response:', parseError);
+                    return;
+                }
+                
+                // Add a small fade effect
+                factText.style.opacity = '0.5';
+                setTimeout(() => {
+                    factText.textContent = data.fact;
+                }, 200);
+            } catch (error) {
+                console.error('Error fetching new fact:', error);
+                factText.textContent = 'Sorry, could not load a new fact. Please try again.';
+            } finally {
+                // Reset button state
+                buttonText.textContent = 'New Fact';
+                button.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>
+
+```
+2. Visit `/generate` to see the nicely presented fact.
+
+# P1: Random Fun Fact Creator
+As an engineer, I want to be able to create my own fun facts, so that I can expand the fact list and never run out of new ones.
+
+---
+
+## Implementation Details
+
+### HTTP Handler (REST)
+The handler bridges the database layer and the UI layer, allowing the random fact generator page to display facts and fetch new ones without page refreshes. Prior to the implementation of HTML, this will just be a JSON response.
+
+#### Steps:
+1. Implement the `create_route()` method in `create_fact.py`.
+
+```python
+def create_route():
+    if request.method == "GET":
+        return render_template("create.html")
+        #GET method to render the create form
+    if request.method == "POST":
+        fact_text = request.form.get("fact_text")
+        if not fact_text:
+            return "Fact text is required", 400
+        fact_create_entity = create_fact(fact_text)
+        return render_template("create.html", random_fact=fact_create_entity.fact)
+```
+
+---
+
+### Database Layer
+The database implementation fetches a single random fact from the PostgreSQL database.
+
+#### Steps:
+1. Implement the `create_fact()` method in `create_fact.py`.
+
+```python
+def create_fact(fact_text: str) -> Fact:
+    provider = PostgresConnectionProvider()
+    with provider.cursor() as cur:
+        cur.execute(
+            "INSERT INTO facts (fact) VALUES (%s, %s) RETURNING id, fact;",
+            (fact_text)
+        )
+        result = cur.fetchone()
+        provider.commit()
+        return Fact(id=result[0], fact=result[1])
+```
+
+---
+
+### REST Router
+#### Steps:
+1. Add a `create` route with a `POST` and `GET` method to `router.py`.
+
+```python
+from flask import Flask
+from .home import home_route
+from .get_fact import get_route
+from .create_fact import create_route
+
+def create_app():
+    app = Flask(__name__,
+                template_folder='../templates',
+                static_folder='../static')
+    app.add_url_rule("/", view_func=home_route, methods=["GET"])
+    app.add_url_rule("/generate", view_func=get_route, methods=["GET"])
+    app.add_url_rule("/create", view_func=create_route, methods=["GET","POST"]) # TASK
+
+    # Print all registered routes
+    print("Registered routes:")
+    for rule in app.url_map.iter_rules():
+        print(f"{rule} -> {rule.methods}")
+    return app
+```
+2. Visit `/create` on localhost to see a fact.
 
 ```
 {
