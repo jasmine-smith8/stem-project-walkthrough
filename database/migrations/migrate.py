@@ -9,6 +9,7 @@ conn = psycopg2.connect(
     port=os.getenv("POSTGRES_PORT", "5432")
 )
 
+#Will this have to be a task - as otherwise the database will expect extension fields to be there on startup?
 with conn:
     with conn.cursor() as cur:
         cur.execute("""
