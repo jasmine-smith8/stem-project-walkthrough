@@ -1,6 +1,6 @@
 # User Stories
 
-## P0: Random Fun Fact Generator
+# P0: Random Fun Fact Generator
 As an engineer, I want to be able to get a random fun fact from a database, so that I can share them with my team.
 
 ---
@@ -92,78 +92,59 @@ def create_app():
 1. Add HTML to present the fact nicely.
 
 In `templates/generate.html`:
+
 ```html
-<!DOCTYPE html>
-<html>
 <head>
     <title>Random Fact Generator</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
-<body>
-    <div class="page-container generate-container">
-        <!-- Navbar -->
-        {% include './partials/navbar.html' %}
+<div>
+    <p>Your random fact is: </p>
+    <strong id="fact-text">{{ random_fact }}</strong>
+    <button onclick="getNewFact()">New Fact</button>
+</div>
 
-        <div class="main-container">
-            <h1>Random Fact Generator</h1>
-            <div class="fact-container">
-                <p>Your random fact is: </p>
-                <strong id="fact-text">{{ random_fact }}</strong>
-            </div>
-            <button class="fact-generator-button" onclick="getNewFact()">
-            <span id="button-text">New Fact</span>
-            </button>
-        </div>
-
-        <!-- Footer -->
-        {% include './partials/footer.html' %}
-    </div>
-
-    <script>
-        async function getNewFact() {
-            const button = document.querySelector('.fact-generator-button');
-            const buttonText = document.getElementById('button-text');
-            const factText = document.getElementById('fact-text');
-            
-            // Show loading state
-            buttonText.textContent = 'Loading...';
-            button.disabled = true;
-            
+<script>
+    async function getNewFact() {
+        const button = document.querySelector('button');
+        const factText = document.getElementById('fact-text');
+        
+        // Show loading state
+        button.textContent = 'Loading...';
+        button.disabled = true;
+        
+        try {
+            // Call /generate expecting JSON when json=1 query param is present
+            const response = await fetch('/generate?json=1', {
+                headers: { 'Accept': 'application/json' }
+            });
+            let data;
             try {
-                // Call /generate expecting JSON when json=1 query param is present
-                const response = await fetch('/generate?json=1', {
-                    headers: { 'Accept': 'application/json' }
-                });
-                let data;
-                try {
-                    data = await response.json();
-                } catch (parseError) {
-                    console.error('Error parsing JSON response:', parseError);
-                    return;
-                }
-                
-                // Add a small fade effect
-                factText.style.opacity = '0.5';
-                setTimeout(() => {
+                data = await response.json();
+            } catch (parseError) {
+                console.error('Error parsing JSON response:', parseError);
+                return;
+            }
+            
+                    factText.textContent = data.fact;
                     factText.textContent = data.fact;
                 }, 200);
-            } catch (error) {
-                console.error('Error fetching new fact:', error);
-                factText.textContent = 'Sorry, could not load a new fact. Please try again.';
-            } finally {
-                // Reset button state
-                buttonText.textContent = 'New Fact';
-                button.disabled = false;
-            }
+            factText.textContent = data.fact;
+                }, 200);
+        } catch (error) {
+            console.error('Error fetching new fact:', error);
+            factText.textContent = 'Sorry, could not load a new fact. Please try again.';
+        } finally {
+            // Reset button state
+            button.textContent = 'New Fact';
+            button.disabled = false;
         }
-    </script>
-</body>
-</html>
-
+    }
+</script>
 ```
 2. Visit `/generate` to see the nicely presented fact.
 
-## P1: Random Fun Fact Creator
+# P1: Random Fun Fact Creator
 As an engineer, I want to be able to create my own fun facts, so that I can expand the fact list and never run out of new ones.
 
 ---
@@ -326,7 +307,19 @@ In `templates/create.html`:
 ```
 2. Visit `/create` to see the form.
 
-## P1: Random Fun Fact Voting System
+# P1: Random Fun Fact Website Design
+As a UI/UX engineer, I want my random fun fact generator to provide an accessible user experience whilst maintaining a clear theme.
+
+## Implementation Details
+
+### CSS Implementation
+
+In `static/css/styles.css`, identify areas you would like to update:
+
+ - You will see a `#TASK` comment next to any colour or fonts that can be customised.
+ - This tasks is flexible, so collaborate with your team to come up with a cohesive theme that will fit with your implementation and branding.
+
+# P2: Random Fun Fact Voting System
 As an engineer, I want to be able to add a voting system to my fact service, so that I can track which facts my team like or dislike.
 
 ---
@@ -597,7 +590,7 @@ In `templates/generate.html`:
 ```
 2. Visit `/generate` and your voting buttons should appear below the fact with number of votes.
 
-# P1: Random Fun Fact Filter
+# P2: Random Fun Fact Filter
 As an engineer, I want to be able to filter facts by categories, so that I can tailor my facts to the audience.
 
 ---
@@ -801,3 +794,5 @@ In `templates/generate.html`:
 
 ```
 2. Visit `/generate` and your fact should appear with a category.
+
+
