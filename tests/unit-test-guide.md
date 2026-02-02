@@ -1,3 +1,33 @@
+# Installing and Using pytest-cov
+
+### What is pytest-cov?
+pytest-cov is a tool that shows you which parts of your code are covered by tests. It generates a **coverage report** that tells you:
+- Which lines of code were run during testing
+- Which lines were never executed by your tests
+- The percentage of your code that is tested
+
+This helps you identify parts of your code that need more tests.
+
+### How to Install pytest-cov
+
+**Step 1:** Make sure your virtual environment is activated. If you see `(venv)` at the beginning of your terminal prompt, it's activated. If not, run:
+```bash
+source venv/bin/activate
+```
+
+**Step 2:** Install pytest-cov using pip:
+```bash
+pip install pytest-cov
+```
+
+### How to Run Tests with Coverage
+
+**Step 1:** Click on the 'Testing' icon in the left navigation bar (hint: it looks like a beaker).
+
+**Step 2:** Click the 'Run Test with Coverage' option next to the test(s) you want to run.
+
+**Step 3:** View the 'Test Coverage' section in the Test Explorer panel to see the coverage report for each file.
+
 # Unit Test Guide: Arrange, Act, Assert Pattern
 
 Unit testing is a way to check if small parts of your code work correctly. The **Arrange, Act, Assert** pattern is a simple way to organize your tests.
