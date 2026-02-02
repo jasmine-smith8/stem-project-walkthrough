@@ -12,7 +12,7 @@ This helps you identify parts of your code that need more tests.
 
 **Step 1:** Make sure your virtual environment is activated. If you see `(venv)` at the beginning of your terminal prompt, it's activated. If not, run:
 ```bash
-source .venv/bin/activate
+source venv/bin/activate
 ```
 
 **Step 2:** Install pytest-cov using pip:
