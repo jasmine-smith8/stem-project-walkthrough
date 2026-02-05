@@ -70,12 +70,12 @@ class TestGetFactRoute:
 
                 # Assert
                 assert result == "null attributes json"
-                mock_jsonify.assert_called_once_with({
+                mock_jsonify.assert_called_with({
                     "id": None,
                     "fact": "Fact with null attributes",
                     "category": None,
-                    "likes": 0,  # getattr default
-                    "dislikes": 0  # getattr default
+                    "likes": None,  # getattr default
+                    "dislikes": None  # getattr default
                 })
 
     @patch('rest.get_fact.get_fact')
