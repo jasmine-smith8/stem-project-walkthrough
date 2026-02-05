@@ -148,7 +148,7 @@ class TestVoteFact:
         assert result.fact == "Fact with nulls"
         assert result.category == "trivia"
         assert result.likes is None
-        assert result.dislikes is test_get_fact_no_results_found
+        assert result.dislikes is None
 
     @patch.object(sys.modules['database.vote_fact'], 'PostgresConnectionProvider')
     def test_vote_fact_cursor_context_manager(self, mock_provider_class):
