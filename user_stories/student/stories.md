@@ -16,6 +16,8 @@ As an engineer, I want to be able to get a random fun fact from a database, so t
 ### Database Layer
 The database implementation fetches a single random fact from the PostgreSQL database.
 
+You can complete the [SQL worksheet](../../database/worksheet.md) before moving on to the next steps.
+
 #### Steps:
 **P0.1 Implement the get_fact function** in `database/get_fact.py`:
    - Import the PostgresConnectionProvider from `database/provider.py`
@@ -27,6 +29,8 @@ The database implementation fetches a single random fact from the PostgreSQL dat
 
 ### HTTP Handler (REST)
 The handler bridges the database and the User Interface (UI), allowing the random fact generator page to display facts and fetch new ones without having to refresh the page.
+
+You can complete the [HTTP worksheet](../../rest/worksheet.md) before moving on to the next steps.
 
 #### Steps:
 **P0.2 Implement the get_route function** in `rest/get_fact.py`:
@@ -47,6 +51,8 @@ The handler bridges the database and the User Interface (UI), allowing the rando
 
 ### Unit Tests
 **P0.4 Implement unit tests** in the test files which are following the pattern `filename_test.py`:
+
+You can read the [unit test guide](../../tests/unit-test-guide.md) before moving on to the next steps.
 
 Some unit tests have been implemented for you as an example, you may not need to complete all of the steps below.
 
