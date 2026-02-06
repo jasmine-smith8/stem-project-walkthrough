@@ -9,6 +9,7 @@ conn = psycopg2.connect(
     port=os.getenv("POSTGRES_PORT", "5432")
 )
 
+# Made category nullable to avoid conflict in earlier tasks
 with conn:
     with conn.cursor() as cur:
         cur.execute("""
@@ -18,7 +19,7 @@ with conn:
                 fact TEXT NOT NULL,
                 likes INT DEFAULT 0,
                 dislikes INT DEFAULT 0,
-                category TEXT NOT NULL
+                category TEXT
             );
         """)
         cur.execute("""
