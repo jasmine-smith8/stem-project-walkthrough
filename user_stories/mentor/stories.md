@@ -232,7 +232,7 @@ def create_app():
 ---
 
 ### Unit Tests
-1. Add unit tests to cover the generate fact logic.
+1. Add unit tests to cover the create fact logic.
 2. Place tests in the same directory as the original file, following the convention `filename_test.py`.
 3. Reference the given happy path & unit test guide located in the same folder and encourage students to think about negative cases to improve test coverage.
 
@@ -444,7 +444,7 @@ def create_app():
 ```
 
 ### Unit Tests
-1. Add unit tests to cover the generate fact logic.
+1. Add unit tests to cover the vote fact logic.
 2. Place tests in the same directory as the original file, following the convention `filename_test.py`.
 3. Reference the given happy path & unit test guide located in the same folder and encourage students to think about negative cases to improve test coverage.
 
@@ -646,7 +646,7 @@ def get_fact() -> Fact:
 ---
 
 ### Unit Tests
-1. Add unit tests to cover the generate fact logic.
+1. Add unit tests to cover the fact filtering logic.
 2. Place tests in the same directory as the original file, following the convention `filename_test.py`.
 3. Reference the given happy path & unit test guide located in the same folder and encourage students to think about negative cases to improve test coverage.
 
