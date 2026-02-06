@@ -13,23 +13,11 @@ As an engineer, I want to be able to get a random fun fact from a database, so t
 
 ## Implementation Details
 
-### HTTP Handler (REST)
-The handler bridges the database and the User Interface (UI), allowing the random fact generator page to display facts and fetch new ones without having to refresh the page.
-
-#### Steps:
-**Create the get_route function** in `rest/get_fact.py`:
-   - Import the necessary Flask modules (request, jsonify, render_template)
-   - Update the function that calls the database `get_fact` function
-   - Check if the request wants JSON format by looking for "json" parameter
-   - Return either JSON data or render an HTML template with the fact
-   
----
-
 ### Database Layer
 The database implementation fetches a single random fact from the PostgreSQL database.
 
 #### Steps:
-**Create the get_fact function** in `database/get_fact.py`:
+**P0.1 Implement the get_fact function** in `database/get_fact.py`:
    - Import the PostgresConnectionProvider from `database/provider.py`
    - Import the Fact class from `fact.py`
    - Execute a SQL query to select a random fact from the facts table
@@ -37,9 +25,19 @@ The database implementation fetches a single random fact from the PostgreSQL dat
 
 ---
 
+### HTTP Handler (REST)
+The handler bridges the database and the User Interface (UI), allowing the random fact generator page to display facts and fetch new ones without having to refresh the page.
+
+#### Steps:
+**P0.2 Implement the get_route function** in `rest/get_fact.py`:
+   - Import the necessary Flask modules (request, jsonify, render_template)
+   - Update the function that calls the database `get_fact` function
+   - Return either JSON data or render an HTML template with the fact
+   
+---
 ### REST Router
 #### Steps:
-**Update the router** in `rest/router.py`:
+**P0.3 Update the router** in `rest/router.py`:
    - Import the get_route function from get_fact module
    - Add a new URL rule for "/generate" that accepts GET requests
    - Connect this route to your get_route function
@@ -48,9 +46,12 @@ The database implementation fetches a single random fact from the PostgreSQL dat
 ---
 
 ### Unit Tests
-**Create test files** following the pattern `filename_test.py`:
-   - Test the happy path (successful fact retrieval)
-   - Test edge cases (empty database, connection errors)
+**P0.4 Implement unit tests** in the test files which are following the pattern `filename_test.py`:
+
+Some unit tests have been implemented for you as an example, you may not need to complete all of the steps below.
+
+   - Test the happy path (e.g. successful fact retrieval)
+   - Test edge cases (e.g. empty database, connection errors)
    - Place tests in the same directory as the file being tested
    - PowerPoint: Why would we want unit tests to validate functions are working correctly as a software development team?
 
@@ -103,7 +104,7 @@ As an engineer, I want to be able to create my own fun facts, so that I can expa
 
 ---
 
-# P1: Random Fun Fact Website Design
+# P2: Random Fun Fact Website Design
 As a UI/UX engineer, I want my random fun fact generator to provide an accessible user experience whilst maintaining a clear theme.
 
 ## Implementation Details
@@ -115,7 +116,7 @@ As a UI/UX engineer, I want my random fun fact generator to provide an accessibl
    - Ensure accessibility with proper contrast ratios
    - PowerPoint: What other considerations could we have made to improve user experience?
 
-# P2: Random Fun Fact Voting System
+# P3: Random Fun Fact Voting System
 As an engineer, I want to be able to add a voting system to my fact service, so that I can track which facts my team like or dislike.
 
 ---
@@ -174,7 +175,7 @@ As an engineer, I want to be able to add a voting system to my fact service, so 
 
 ---
 
-# P2: Random Fun Fact Filter
+# P4: Random Fun Fact Filter
 As an engineer, I want to be able to filter facts by categories, so that I can tailor my facts to the audience.
 
 ---
