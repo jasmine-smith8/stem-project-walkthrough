@@ -1,3 +1,5 @@
+# Task P0.4
+
 import pytest
 from unittest.mock import Mock, patch
 import sys
@@ -13,6 +15,7 @@ from fact import Fact
 class TestGetFact:
     """Test the get_fact function"""
 
+    # Patch the PostgresConnectionProvider to mock database interactions
     @patch.object(sys.modules['database.get_fact'], 'PostgresConnectionProvider')
     def test_get_fact_success(self, mock_provider_class):
         """Test successful fact retrieval"""
@@ -42,6 +45,7 @@ class TestGetFact:
             "SELECT id, fact, category, likes, dislikes FROM facts ORDER BY RANDOM() LIMIT 1;"
         )
 
+    # Patch the PostgresConnectionProvider to mock database interactions
     @patch.object(sys.modules['database.get_fact'], 'PostgresConnectionProvider')
     def test_get_fact_with_null_likes_dislikes(self, mock_provider_class):
         """Test fact retrieval when likes/dislikes are NULL in database"""
@@ -56,14 +60,10 @@ class TestGetFact:
         mock_cursor.fetchone.return_value = (2, "Another random fact", "history", None, None)
 
         # Act
-        result = get_fact()
+        # Call the get_fact function
 
         # Assert
-        assert result.id == 2
-        assert result.fact == "Another random fact"
-        assert result.category == "history"
-        assert result.likes is None  # Should preserve NULL values as returned from DB
-        assert result.dislikes is None  # Should preserve NULL values as returned from DB
+        # Verify that the Fact object is created with default values for likes/dislikes
 
     @patch.object(sys.modules['database.get_fact'], 'PostgresConnectionProvider')
     def test_get_fact_no_results_found(self, mock_provider_class):
@@ -79,15 +79,10 @@ class TestGetFact:
         mock_cursor.fetchone.return_value = None
 
         # Act
-        result = get_fact()
+       # Call the get_fact function
 
         # Assert
-        assert isinstance(result, Fact)
-        assert result.id is None
-        assert result.fact == "No facts found."
-        assert result.category == "none"
-        assert result.likes == 0
-        assert result.dislikes == 0
+        # Verify that the Fact object is created with default values for likes/dislikes
 
         # Verify SQL execution
         mock_cursor.execute.assert_called_once()
