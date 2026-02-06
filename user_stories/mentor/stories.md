@@ -72,7 +72,7 @@ def create_app():
         print(f"{rule} -> {rule.methods}")
     return app
 ```
-2. Visit `/generate` on localhost to see a fact.
+2. Visit `http://127.0.0.1:5000/generate` on localhost to see a fact.
 
 ```
 {
@@ -142,7 +142,7 @@ In `templates/generate.html`:
     }
 </script>
 ```
-2. Visit `/generate` to see the nicely presented fact.
+2. Visit `http://127.0.0.1:5000/generate` to see the nicely presented fact.
 
 # P1: Random Fun Fact Creator
 As an engineer, I want to be able to create my own fun facts, so that I can expand the fact list and never run out of new ones.
@@ -222,7 +222,7 @@ def create_app():
         print(f"{rule} -> {rule.methods}")
     return app
 ```
-2. Visit `/create` on localhost to see a fact.
+2. Visit `http://127.0.0.1:5000/create` on localhost to see a fact.
 
 ```
 {
@@ -305,7 +305,7 @@ In `templates/create.html`:
 </body>
 </html>
 ```
-2. Visit `/create` to see the form.
+2. Visit `http://127.0.0.1:5000/create` to see the form.
 
 # P1: Random Fun Fact Website Design
 As a UI/UX engineer, I want my random fun fact generator to provide an accessible user experience whilst maintaining a clear theme.
@@ -588,7 +588,7 @@ In `templates/generate.html`:
 </html>
 
 ```
-2. Visit `/generate` and your voting buttons should appear below the fact with number of votes.
+2. Visit `http://127.0.0.1:5000/generate` and your voting buttons should appear below the fact with number of votes.
 
 # P2: Random Fun Fact Filter
 As an engineer, I want to be able to filter facts by categories, so that I can tailor my facts to the audience.
@@ -793,6 +793,6 @@ In `templates/generate.html`:
 </html>
 
 ```
-2. Visit `/generate` and your fact should appear with a category.
+2. Visit `http://127.0.0.1:5000/generate` and your fact should appear with a category.
 
 
