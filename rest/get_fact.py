@@ -1,9 +1,13 @@
-from flask import render_template, jsonify, request
-from database import get_fact
+# Task P0.2 
+
+# Import necessary modules
 
 def get_route():
-    fact = get_fact()
+    # Call database function to get a random fact
+
+    # Check if the client wants JSON response based on query parameters
     wants_json = request.args.get("json") in ("1", "true", "True")
+
     if wants_json:
         return jsonify({
             "id": getattr(fact, "id", None),
@@ -12,9 +16,5 @@ def get_route():
             "likes": getattr(fact, "likes", 0),
             "dislikes": getattr(fact, "dislikes", 0) 
         })
-    return render_template("generate.html",
-                         random_fact=fact.fact,
-                         category=fact.category,
-                         random_fact_id=fact.id,
-                         random_fact_likes=getattr(fact, "likes", 0),
-                         random_fact_dislikes=getattr(fact, "dislikes", 0))
+    
+    return render_template("generate.html") # Render the HTML template and pass the fact data to it
