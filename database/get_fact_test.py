@@ -19,7 +19,7 @@ class TestGetFact:
     @patch.object(sys.modules['database.get_fact'], 'PostgresConnectionProvider')
     def test_get_fact_success(self, mock_provider_class):
         """Test successful fact retrieval"""
-        # Arrange
+        # ARRANGE
         mock_provider = Mock()
         mock_cursor = Mock()
         mock_provider_class.return_value = mock_provider
@@ -29,10 +29,10 @@ class TestGetFact:
         # Mock database return values
         mock_cursor.fetchone.return_value = (1, "Random test fact", "science", 5, 2)
 
-        # Act
+        # ACT
         result = get_fact()
 
-        # Assert
+        # ASSERT
         assert isinstance(result, Fact)
         assert result.id == 1
         assert result.fact == "Random test fact"
@@ -49,7 +49,7 @@ class TestGetFact:
     @patch.object(sys.modules['database.get_fact'], 'PostgresConnectionProvider')
     def test_get_fact_with_null_likes_dislikes(self, mock_provider_class):
         """Test fact retrieval when likes/dislikes are NULL in database"""
-        # Arrange
+        # ARRANGE
         mock_provider = Mock()
         mock_cursor = Mock()
         mock_provider_class.return_value = mock_provider
@@ -59,16 +59,16 @@ class TestGetFact:
         # Mock database return with NULL values
         mock_cursor.fetchone.return_value = (2, "Another random fact", "history", None, None)
 
-        # Act
-        # Call the get_fact function
+        # ACT
+        # TODO: Call the get_fact function
 
-        # Assert
-        # Verify that the Fact object is created with default values for likes/dislikes
+        # ASSERT
+        # TODO: Verify that the Fact object is created with default values for likes/dislikes
 
     @patch.object(sys.modules['database.get_fact'], 'PostgresConnectionProvider')
     def test_get_fact_no_results_found(self, mock_provider_class):
         """Test behavior when no facts are found in database"""
-        # Arrange
+        # ARRANGE
         mock_provider = Mock()
         mock_cursor = Mock()
         mock_provider_class.return_value = mock_provider
@@ -78,11 +78,11 @@ class TestGetFact:
         # Mock no result returned
         mock_cursor.fetchone.return_value = None
 
-        # Act
-       # Call the get_fact function
+        # ACT
+       # TODO: Call the get_fact function
 
-        # Assert
-        # Verify that the Fact object is created with default values for likes/dislikes
+        # ASSERT
+        # TODO: Verify that the Fact object is created with default values for likes/dislikes
 
         # Verify SQL execution
         mock_cursor.execute.assert_called_once()
@@ -90,7 +90,7 @@ class TestGetFact:
     @patch.object(sys.modules['database.get_fact'], 'PostgresConnectionProvider')
     def test_get_fact_database_error(self, mock_provider_class):
         """Test handling of database errors during fact retrieval"""
-        # Arrange
+        # ARRANGE
         mock_provider = Mock()
         mock_cursor = Mock()
         mock_provider_class.return_value = mock_provider
@@ -100,7 +100,7 @@ class TestGetFact:
         # Mock database error
         mock_cursor.execute.side_effect = Exception("Database connection failed")
 
-        # Act & Assert
+        # ACT & ASSERT
         with pytest.raises(Exception) as exc_info:
             get_fact()
 

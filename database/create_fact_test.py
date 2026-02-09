@@ -16,7 +16,7 @@ class TestCreateFact:
     @patch.object(sys.modules['database.create_fact'], 'PostgresConnectionProvider')
     def test_create_fact_success(self, mock_provider_class):
         """Test successful fact creation"""
-        # Arrange
+        # ARRANGE
         mock_provider = Mock()
         mock_cursor = Mock()
         mock_provider_class.return_value = mock_provider
@@ -26,10 +26,10 @@ class TestCreateFact:
         # Mock database return values
         mock_cursor.fetchone.return_value = (1, "Test fact", "science", 0, 0)
 
-        # Act
+        # ACT
         result = create_fact("Test fact", "science")
 
-        # Assert
+        # ASSERT
         assert isinstance(result, Fact)
         assert result.id == 1
         assert result.fact == "Test fact"
@@ -44,7 +44,7 @@ class TestCreateFact:
     @patch.object(sys.modules['database.create_fact'], 'PostgresConnectionProvider')
     def test_create_fact_with_null_likes_dislikes(self, mock_provider_class):
         """Test fact creation when likes/dislikes are NULL in database"""
-        # Arrange
+        # ARRANGE
         mock_provider = Mock()
         mock_cursor = Mock()
         mock_provider_class.return_value = mock_provider
@@ -54,10 +54,10 @@ class TestCreateFact:
         # Mock database return with NULL values
         mock_cursor.fetchone.return_value = (2, "Another fact", "history", None, None)
 
-        # Act
+        # ACT
         result = create_fact("Another fact", "history")
 
-        # Assert
+        # ASSERT
         assert result.id == 2
         assert result.fact == "Another fact"
         assert result.category == "history"
@@ -67,7 +67,7 @@ class TestCreateFact:
     @patch.object(sys.modules['database.create_fact'], 'PostgresConnectionProvider')
     def test_create_fact_empty_strings(self, mock_provider_class):
         """Test fact creation with empty strings"""
-        # Arrange
+        # ARRANGE
         mock_provider = Mock()
         mock_cursor = Mock()
         mock_provider_class.return_value = mock_provider
@@ -76,10 +76,10 @@ class TestCreateFact:
 
         mock_cursor.fetchone.return_value = (4, "", "", 0, 0)
 
-        # Act
+        # ACT
         result = create_fact("", "")
 
-        # Assert
+        # ASSERT
         assert result.id == 4
         assert result.fact == ""
         assert result.category == ""
@@ -87,7 +87,7 @@ class TestCreateFact:
     @patch.object(sys.modules['database.create_fact'], 'PostgresConnectionProvider')
     def test_create_fact_database_error(self, mock_provider_class):
         """Test handling of database errors during fact creation"""
-        # Arrange
+        # ARRANGE
         mock_provider = Mock()
         mock_cursor = Mock()
         mock_provider_class.return_value = mock_provider
@@ -97,7 +97,7 @@ class TestCreateFact:
         # Mock database error
         mock_cursor.execute.side_effect = Exception("Database connection failed")
 
-        # Act & Assert
+        # ACT & ASSERT
         with pytest.raises(Exception) as exc_info:
             create_fact("Test fact", "test")
 
@@ -107,7 +107,7 @@ class TestCreateFact:
     @patch.object(sys.modules['database.create_fact'], 'PostgresConnectionProvider')
     def test_create_fact_no_result_returned(self, mock_provider_class):
         """Test handling when no result is returned from database"""
-        # Arrange
+        # ARRANGE
         mock_provider = Mock()
         mock_cursor = Mock()
         mock_provider_class.return_value = mock_provider
@@ -117,7 +117,7 @@ class TestCreateFact:
         # Mock no result returned
         mock_cursor.fetchone.return_value = None
 
-        # Act & Assert
+        # ACT & ASSERT
         with pytest.raises((TypeError, AttributeError)):
             create_fact("Test fact", "test")
 

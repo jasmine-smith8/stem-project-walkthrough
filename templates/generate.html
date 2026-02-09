@@ -17,20 +17,24 @@
             </div>
             <div class="voting-container">
             <div class="vote-section">
-                <button class="vote-button like-button" onclick="vote('like', '{{ random_fact_id }}')">
-                <img src="{{ url_for('static', filename='images/thumbs-up.jpg') }}" alt="Like" class="vote-icon">
+                <!-- TODO: Add the like button and call JavaScript function to update the vote count -->
+                <button class="vote-button like-button" onclick="">
+                    <img src="{{ url_for('static', filename='images/thumbs-up.jpg') }}" alt="Like" class="vote-icon">
                 </button>
-                <span id="like-count-{{ random_fact_id }}" class="vote-count">{{ random_fact_likes }}</span>
+                <!-- TODO: Display the number of likes for the fact with the given ID -->
+                <span id="" class="">{{ ... }}</span>
             </div>
             <div class="vote-section">
-                <button class="vote-button dislike-button" onclick="vote('dislike', '{{ random_fact_id }}')">
-                <img src="{{ url_for('static', filename='images/thumbs-up.jpg') }}" alt="Dislike" class="vote-icon">
+                <!-- TODO: Add the dislike button and call JavaScript function to update the vote count -->
+                <button class="vote-button dislike-button" onclick="">
+                    <img src="{{ url_for('static', filename='images/thumbs-up.jpg') }}" alt="Dislike" class="vote-icon">
                 </button>
-                <span id="dislike-count-{{ random_fact_id }}" class="vote-count">{{ random_fact_dislikes }}</span>
+                <!-- TODO: Display the number of dislikes for the fact with the given ID -->
+                <span id="" class="">{{ ... }}</span>
             </div>
             </div>
             <button class="fact-generator-button" onclick="getNewFact()">
-            <span id="button-text">New Fact</span>
+                <span id="button-text">New Fact</span>
             </button>
         </div>
 
@@ -102,15 +106,15 @@
                 console.error('No fact ID provided');
                 return;
             }
-            const url = '/api/vote';
-            const likeCount = document.getElementById(`like-count-${factId}`);
-            const dislikeCount = document.getElementById(`dislike-count-${factId}`);
+            const url = ''; // TODO: Set the correct URL for the vote endpoint
+            const likeCount = document.getElementById(``); // TODO: Set the correct ID for the like count element based on the fact ID
+            const dislikeCount = document.getElementById(``); // TODO: Set the correct ID for the dislike count element based on the fact ID
 
             try {
                 const response = await fetch(url, {
-                    method: 'POST',
+                    method: '', // TODO: Set the HTTP method
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ fact_id: factId, vote_type: type })
+                    body: JSON.stringify({  }) // TODO: Include the fact ID and vote type in the request body
                 });
 
                 if (!response.ok) {
@@ -119,11 +123,12 @@
                     return;
                 }
 
+                // Get the data with the new like/dislike count from the response
                 const data = await response.json();
                 if (type === 'like') {
-                    likeCount.textContent = data.new_count;
+                    // TODO: Update the like count on the page to use the new like count
                 } else {
-                    dislikeCount.textContent = data.new_count;
+                    // TODO: Update the dislike count on the page to use the new dislike count
                 }
             } catch (error) {
                 console.error('Error voting:', error);

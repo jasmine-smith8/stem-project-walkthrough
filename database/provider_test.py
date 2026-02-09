@@ -15,14 +15,14 @@ class TestPostgresConnectionProvider:
     @patch('database.provider.psycopg2.connect')
     def test_init_with_default_values(self, mock_connect):
         """Test initialization with default environment values"""
-        # Arrange
+        # ARRANGE
         mock_connection = Mock()
         mock_connect.return_value = mock_connection
 
-        # Act
+        # ACT
         provider = PostgresConnectionProvider()
 
-        # Assert
+        # ASSERT
         mock_connect.assert_called_once_with(
             dbname="factsdb",
             user="postgres",
@@ -42,14 +42,14 @@ class TestPostgresConnectionProvider:
     })
     def test_init_with_environment_variables(self, mock_connect):
         """Test initialization with custom environment variables"""
-        # Arrange
+        # ARRANGE
         mock_connection = Mock()
         mock_connect.return_value = mock_connection
 
-        # Act
+        # ACT
         provider = PostgresConnectionProvider()
 
-        # Assert
+        # ASSERT
         mock_connect.assert_called_once_with(
             dbname="test_db",
             user="test_user",
@@ -67,14 +67,14 @@ class TestPostgresConnectionProvider:
     })
     def test_init_with_partial_environment_variables(self, mock_connect):
         """Test initialization with partial environment variables"""
-        # Arrange
+        # ARRANGE
         mock_connection = Mock()
         mock_connect.return_value = mock_connection
 
-        # Act
+        # ACT
         provider = PostgresConnectionProvider()
 
-        # Assert
+        # ASSERT
         mock_connect.assert_called_once_with(
             dbname="partial_db",        # From env
             user="partial_user",        # From env
@@ -86,10 +86,10 @@ class TestPostgresConnectionProvider:
     @patch('database.provider.psycopg2.connect')
     def test_init_connection_error(self, mock_connect):
         """Test handling of connection errors during initialization"""
-        # Arrange
+        # ARRANGE
         mock_connect.side_effect = Exception("Connection failed")
 
-        # Act & Assert
+        # ACT & ASSERT
         with pytest.raises(Exception) as exc_info:
             PostgresConnectionProvider()
 
@@ -98,7 +98,7 @@ class TestPostgresConnectionProvider:
     @patch('database.provider.psycopg2.connect')
     def test_cursor_method(self, mock_connect):
         """Test cursor method returns connection cursor"""
-        # Arrange
+        # ARRANGE
         mock_connection = Mock()
         mock_cursor = Mock()
         mock_connect.return_value = mock_connection
@@ -106,17 +106,17 @@ class TestPostgresConnectionProvider:
 
         provider = PostgresConnectionProvider()
 
-        # Act
+        # ACT
         result = provider.cursor()
 
-        # Assert
+        # ASSERT
         mock_connection.cursor.assert_called_once()
         assert result == mock_cursor
 
     @patch('database.provider.psycopg2.connect')
     def test_cursor_method_multiple_calls(self, mock_connect):
         """Test cursor method can be called multiple times"""
-        # Arrange
+        # ARRANGE
         mock_connection = Mock()
         mock_cursor1 = Mock()
         mock_cursor2 = Mock()
@@ -125,11 +125,11 @@ class TestPostgresConnectionProvider:
 
         provider = PostgresConnectionProvider()
 
-        # Act
+        # ACT
         cursor1 = provider.cursor()
         cursor2 = provider.cursor()
 
-        # Assert
+        # ASSERT
         assert mock_connection.cursor.call_count == 2
         assert cursor1 == mock_cursor1
         assert cursor2 == mock_cursor2
@@ -137,37 +137,37 @@ class TestPostgresConnectionProvider:
     @patch('database.provider.psycopg2.connect')
     def test_commit_method(self, mock_connect):
         """Test commit method calls connection commit"""
-        # Arrange
+        # ARRANGE
         mock_connection = Mock()
         mock_connect.return_value = mock_connection
 
         provider = PostgresConnectionProvider()
 
-        # Act
+        # ACT
         provider.commit()
 
-        # Assert
+        # ASSERT
         mock_connection.commit.assert_called_once()
 
     @patch('database.provider.psycopg2.connect')
     def test_close_method(self, mock_connect):
         """Test close method calls connection close"""
-        # Arrange
+        # ARRANGE
         mock_connection = Mock()
         mock_connect.return_value = mock_connection
 
         provider = PostgresConnectionProvider()
 
-        # Act
+        # ACT
         provider.close()
 
-        # Assert
+        # ASSERT
         mock_connection.close.assert_called_once()
 
     @patch('database.provider.psycopg2.connect')
     def test_cursor_commit_close_workflow(self, mock_connect):
         """Test typical workflow: cursor, commit, close"""
-        # Arrange
+        # ARRANGE
         mock_connection = Mock()
         mock_cursor = Mock()
         mock_connect.return_value = mock_connection
@@ -175,12 +175,12 @@ class TestPostgresConnectionProvider:
 
         provider = PostgresConnectionProvider()
 
-        # Act
+        # ACT
         cursor = provider.cursor()
         provider.commit()
         provider.close()
 
-        # Assert
+        # ASSERT
         mock_connection.cursor.assert_called_once()
         mock_connection.commit.assert_called_once()
         mock_connection.close.assert_called_once()
@@ -189,7 +189,7 @@ class TestPostgresConnectionProvider:
     @patch('database.provider.psycopg2.connect')
     def test_connection_with_empty_env_vars(self, mock_connect):
         """Test behavior with empty environment variables"""
-        # Arrange
+        # ARRANGE
         mock_connection = Mock()
         mock_connect.return_value = mock_connection
 
@@ -200,10 +200,10 @@ class TestPostgresConnectionProvider:
             'POSTGRES_HOST': '',
             'POSTGRES_PORT': ''
         }):
-            # Act
+            # ACT
             provider = PostgresConnectionProvider()
 
-        # Assert - empty strings should be used, not defaults
+        # ASSERT - empty strings should be used, not defaults
         mock_connect.assert_called_once_with(
             dbname="",
             user="",

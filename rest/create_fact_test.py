@@ -41,7 +41,7 @@ class TestCreateFactRoute:
     @patch('rest.create_fact.create_fact')
     def test_create_route_post_success(self, mock_create_fact, app):
         """Test successful POST request with valid data"""
-        # Arrange
+        # ARRANGE
         mock_fact = Fact(id=1, fact="Test fact", category="science", likes=0, dislikes=0)
         mock_create_fact.return_value = mock_fact
 
@@ -52,10 +52,10 @@ class TestCreateFactRoute:
             with patch('rest.create_fact.render_template') as mock_render:
                 mock_render.return_value = "success template"
 
-                # Act
+                # ACT
                 result = create_route()
 
-                # Assert
+                # ASSERT
                 assert result == "success template"
                 mock_create_fact.assert_called_once_with('Test fact', 'science')
                 mock_render.assert_called_once_with(
@@ -67,7 +67,7 @@ class TestCreateFactRoute:
     @patch('rest.create_fact.create_fact')
     def test_create_route_post_with_empty_category(self, mock_create_fact, app):
         """Test POST request with empty category"""
-        # Arrange
+        # ARRANGE
         mock_fact = Fact(id=2, fact="Fact without category", category=None, likes=0, dislikes=0)
         mock_create_fact.return_value = mock_fact
 
@@ -78,10 +78,10 @@ class TestCreateFactRoute:
             with patch('rest.create_fact.render_template') as mock_render:
                 mock_render.return_value = "template with empty category"
 
-                # Act
+                # ACT
                 result = create_route()
 
-                # Assert
+                # ASSERT
                 assert result == "template with empty category"
                 mock_create_fact.assert_called_once_with('Fact without category', '')
                 mock_render.assert_called_once_with(
@@ -93,7 +93,7 @@ class TestCreateFactRoute:
     @patch('rest.create_fact.create_fact')
     def test_create_route_post_with_missing_category(self, mock_create_fact, app):
         """Test POST request with missing category field"""
-        # Arrange
+        # ARRANGE
         mock_fact = Fact(id=3, fact="Fact with no category field", category=None, likes=0, dislikes=0)
         mock_create_fact.return_value = mock_fact
 
@@ -104,10 +104,10 @@ class TestCreateFactRoute:
             with patch('rest.create_fact.render_template') as mock_render:
                 mock_render.return_value = "template with None category"
 
-                # Act
+                # ACT
                 result = create_route()
 
-                # Assert
+                # ASSERT
                 assert result == "template with None category"
                 mock_create_fact.assert_called_once_with('Fact with no category field', None)
                 mock_render.assert_called_once_with(
@@ -122,23 +122,23 @@ class TestCreateFactRoute:
             'category': 'science'
             # No fact_text provided
         }):
-            # Act
+            # ACT
             result = create_route()
 
-            # Assert
+            # ASSERT
             assert result == ("Fact text is required", 400)
 
     @patch('rest.create_fact.create_fact')
     def test_create_route_database_error(self, mock_create_fact, app):
         """Test POST request when database function raises an error"""
-        # Arrange
+        # ARRANGE
         mock_create_fact.side_effect = Exception("Database connection failed")
 
         with app.test_request_context('/', method='POST', data={
             'fact_text': 'Test fact',
             'category': 'science'
         }):
-            # Act & Assert
+            # ACT & ASSERT
             with pytest.raises(Exception) as exc_info:
                 create_route()
 
