@@ -60,7 +60,7 @@ assert actual_answer == expected_answer, f"Expected {expected_answer}, but got {
 ```
 
 ## Example Test
-Here’s a full example using the ARRANGE, AC, ASSERT pattern:
+Here’s a full example using the ARRANGE, ACT, ASSERT pattern:
 
 ```python
 def test_addition():
