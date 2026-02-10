@@ -116,7 +116,7 @@ As a UI/UX engineer, I want my random fun fact generator to provide an accessibl
 ## Implementation Details
 
 ### CSS Implementation
-**Customize the stylesheet** in `static/css/styles.css`:
+**P2.1 Customize the stylesheet** in `static/css/styles.css`:
    - Look for `#TASK` comments that indicate customizable areas
    - Update colors, fonts, and layout to match your team's theme
    - Ensure accessibility with proper contrast ratios
