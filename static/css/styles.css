@@ -136,9 +136,12 @@ body {
 }
 
 .navbar .logo {
+    /*  TASK: Change font of your navbar logo text */
+    /* OPTIONAL TASK: Change font size and boldness of your navbar logo text */
     font-family: Rockwell, "Courier Bold", Courier, Georgia, Times, "Times New Roman", serif;
     font-weight: bolder;
     font-size: 2.2rem;
+    /*END OF TASK*/
     background: linear-gradient(45deg, #493b3b, #776767);
     -webkit-background-clip: text;
     background-clip: text;
