@@ -31,7 +31,7 @@ class TestVoteFactRoute:
     @patch('rest.vote_fact.vote_fact')
     def test_vote_route_like_success(self, mock_vote_fact, app):
         """Test successful like vote"""
-        # Arrange
+        # ARRANGE
         mock_fact = Fact(id=1, fact="Test fact", category="science", likes=6, dislikes=2)
         mock_vote_fact.return_value = mock_fact
 
@@ -41,10 +41,10 @@ class TestVoteFactRoute:
             with patch('rest.vote_fact.jsonify') as mock_jsonify:
                 mock_jsonify.return_value = "json response"
 
-                # Act
+                # ACT
                 result = vote_route()
 
-                # Assert
+                # ASSERT
                 mock_vote_fact.assert_called_once_with(1, "like")
                 mock_jsonify.assert_called_once_with({
                     "fact_id": 1,
@@ -57,7 +57,7 @@ class TestVoteFactRoute:
     @patch('rest.vote_fact.vote_fact')
     def test_vote_route_dislike_success(self, mock_vote_fact, app):
         """Test successful dislike vote"""
-        # Arrange
+        # ARRANGE
         mock_fact = Fact(id=2, fact="Another fact", category="history", likes=5, dislikes=8)
         mock_vote_fact.return_value = mock_fact
 
@@ -67,10 +67,10 @@ class TestVoteFactRoute:
             with patch('rest.vote_fact.jsonify') as mock_jsonify:
                 mock_jsonify.return_value = "dislike response"
 
-                # Act
+                # ACT
                 result = vote_route()
 
-                # Assert
+                # ASSERT
                 mock_vote_fact.assert_called_once_with(2, "dislike")
                 mock_jsonify.assert_called_once_with({
                     "fact_id": 2,
@@ -83,7 +83,7 @@ class TestVoteFactRoute:
     @patch('rest.vote_fact.vote_fact')
     def test_vote_route_value_error_handling(self, mock_vote_fact, app):
         """Test handling of ValueError from vote_fact function"""
-        # Arrange
+        # ARRANGE
         mock_vote_fact.side_effect = ValueError("Invalid vote type")
         json_data = {"fact_id": 1, "vote_type": "invalid"}
 
@@ -91,10 +91,10 @@ class TestVoteFactRoute:
             with patch('rest.vote_fact.jsonify') as mock_jsonify:
                 mock_jsonify.return_value = "error response"
 
-                # Act
+                # ACT
                 result = vote_route()
 
-                # Assert
+                # ASSERT
                 mock_vote_fact.assert_called_once_with(1, "invalid")
                 mock_jsonify.assert_called_once_with({"error": "Invalid vote type"})
                 assert result == ("error response", 400)

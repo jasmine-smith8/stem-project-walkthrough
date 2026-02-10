@@ -32,10 +32,10 @@ class TestHomeRoute:
             with patch('rest.home.render_template') as mock_render:
                 mock_render.return_value = "home template content"
 
-                # Act
+                # ACT
                 result = home_route()
 
-                # Assert
+                # ASSERT
                 assert result == "home template content"
                 mock_render.assert_called_once_with("home.html")
 
@@ -45,7 +45,7 @@ class TestHomeRoute:
             with patch('rest.home.render_template') as mock_render:
                 mock_render.side_effect = Exception("Template not found")
 
-                # Act & Assert
+                # ACT & ASSERT
                 with pytest.raises(Exception) as exc_info:
                     home_route()
 

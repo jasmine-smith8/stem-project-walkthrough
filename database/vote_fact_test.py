@@ -1,3 +1,5 @@
+# Task P3.4
+
 import pytest
 from unittest.mock import Mock, patch
 import sys
@@ -13,10 +15,11 @@ from fact import Fact
 class TestVoteFact:
     """Test the vote_fact function"""
 
+    # Patch the PostgresConnectionProvider to mock database interactions
     @patch.object(sys.modules['database.vote_fact'], 'PostgresConnectionProvider')
     def test_vote_fact_like_success(self, mock_provider_class):
         """Test successful like vote on a fact"""
-        # Arrange
+        # ARRANGE
         mock_provider = Mock()
         mock_cursor = Mock()
         mock_provider_class.return_value = mock_provider
@@ -26,10 +29,10 @@ class TestVoteFact:
         # Mock database return values after like
         mock_cursor.fetchone.return_value = (1, "Test fact", "science", 6, 2)
 
-        # Act
+        # ACT
         result = vote_fact(1, "like")
 
-        # Assert
+        # ASSERT
         assert isinstance(result, Fact)
         assert result.id == 1
         assert result.fact == "Test fact"
@@ -51,10 +54,11 @@ class TestVoteFact:
         )
         mock_provider.commit.assert_called_once()
 
+    # Patch the PostgresConnectionProvider to mock database interactions
     @patch.object(sys.modules['database.vote_fact'], 'PostgresConnectionProvider')
     def test_vote_fact_dislike_success(self, mock_provider_class):
         """Test successful dislike vote on a fact"""
-        # Arrange
+        # ARRANGE
         mock_provider = Mock()
         mock_cursor = Mock()
         mock_provider_class.return_value = mock_provider
@@ -64,16 +68,11 @@ class TestVoteFact:
         # Mock database return values after dislike
         mock_cursor.fetchone.return_value = (2, "Another fact", "history", 5, 8)
 
-        # Act
-        result = vote_fact(2, "dislike")
+        # ACT
+        # TODO: Call the vote_fact function with a dislike vote
 
-        # Assert
-        assert isinstance(result, Fact)
-        assert result.id == 2
-        assert result.fact == "Another fact"
-        assert result.category == "history"
-        assert result.likes == 5
-        assert result.dislikes == 8
+        # ASSERT
+        # TODO: Verify the returned Fact object has the expected values
 
         # Verify SQL execution
         assert mock_cursor.execute.call_count == 2
@@ -89,48 +88,53 @@ class TestVoteFact:
         )
         mock_provider.commit.assert_called_once()
 
+    # Patch the PostgresConnectionProvider to mock database interactions
     @patch.object(sys.modules['database.vote_fact'], 'PostgresConnectionProvider')
     def test_vote_fact_invalid_vote_type(self, mock_provider_class):
         """Test error handling for invalid vote type"""
-        # Arrange
+        # ARRANGE
         mock_provider = Mock()
         mock_cursor = Mock()
         mock_provider_class.return_value = mock_provider
         mock_provider.cursor.return_value.__enter__ = Mock(return_value=mock_cursor)
         mock_provider.cursor.return_value.__exit__ = Mock(return_value=None)
 
-        # Act & Assert
+        # ACT
         with pytest.raises(ValueError) as exc_info:
-            vote_fact(1, "invalid")
+            # TODO: Call the vote_fact function with an invalid vote type
 
-        assert "Invalid vote type" in str(exc_info.value)
+        # ASSERT
+        assert "" in str(exc_info.value) # TODO: Check that the error message contains the expected text
 
         # Verify no SQL execution for update (only cursor setup)
         mock_cursor.execute.assert_not_called()
         mock_provider.commit.assert_not_called()
 
+    # Patch the PostgresConnectionProvider to mock database interactions
     @patch.object(sys.modules['database.vote_fact'], 'PostgresConnectionProvider')
     def test_vote_fact_empty_vote_type(self, mock_provider_class):
         """Test error handling for empty vote type"""
-        # Arrange
+        # ARRANGE
         mock_provider = Mock()
         mock_cursor = Mock()
         mock_provider_class.return_value = mock_provider
         mock_provider.cursor.return_value.__enter__ = Mock(return_value=mock_cursor)
         mock_provider.cursor.return_value.__exit__ = Mock(return_value=None)
 
-        # Act & Assert
+        # ACT
         with pytest.raises(ValueError) as exc_info:
-            vote_fact(1, "")
+            # TODO: Call the vote_fact function with an empty vote type
 
-        assert "Invalid vote type" in str(exc_info.value)
+        # ASSERT
+        assert "" in str(exc_info.value) # TODO: Check that the error message contains the expected text
         mock_cursor.execute.assert_not_called()
         mock_provider.commit.assert_not_called()
 
+    # Patch the PostgresConnectionProvider to mock database interactions
     @patch.object(sys.modules['database.vote_fact'], 'PostgresConnectionProvider')
     def test_vote_fact_with_null_likes_dislikes(self, mock_provider_class):
         """Test voting on fact with NULL likes/dislikes"""
-        # Arrange
+        # ARRANGE
         mock_provider = Mock()
         mock_cursor = Mock()
         mock_provider_class.return_value = mock_provider
@@ -140,20 +144,17 @@ class TestVoteFact:
         # Mock result with NULL values
         mock_cursor.fetchone.return_value = (3, "Fact with nulls", "trivia", None, None)
 
-        # Act
-        result = vote_fact(3, "like")
+        # ACT
+        # TODO: Call the vote_fact function with a like or dislike vote
 
-        # Assert
-        assert result.id == 3
-        assert result.fact == "Fact with nulls"
-        assert result.category == "trivia"
-        assert result.likes is None
-        assert result.dislikes is None
+        # ASSERT
+        # TODO: Verify that the returned Fact object handles NULL likes/dislikes appropriately
 
+    # Patch the PostgresConnectionProvider to mock database interactions
     @patch.object(sys.modules['database.vote_fact'], 'PostgresConnectionProvider')
     def test_vote_fact_cursor_context_manager(self, mock_provider_class):
         """Test that cursor context manager is used properly"""
-        # Arrange
+        # ARRANGE
         mock_provider = Mock()
         mock_cursor_context = Mock()
         mock_cursor = Mock()
@@ -165,10 +166,10 @@ class TestVoteFact:
 
         mock_cursor.fetchone.return_value = (1, "Test fact", "test", 1, 0)
 
-        # Act
-        vote_fact(1, "like")
+        # ACT
+        # TODO: Call the vote_fact function to trigger cursor usage
 
-        # Assert
+        # ASSERT
         mock_provider.cursor.assert_called_once()
         mock_cursor_context.__enter__.assert_called_once()
         mock_cursor_context.__exit__.assert_called_once()

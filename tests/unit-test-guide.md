@@ -28,52 +28,52 @@ pip install pytest-cov
 
 **Step 3:** View the 'Test Coverage' section in the Test Explorer panel to see the coverage report for each file.
 
-# Unit Test Guide: Arrange, Act, Assert Pattern
+# Unit Test Guide: ARRANGE, ACT, ASSERT Pattern
 
-Unit testing is a way to check if small parts of your code work correctly. The **Arrange, Act, Assert** pattern is a simple way to organize your tests.
+Unit testing is a way to check if small parts of your code work correctly. The **ARRANGE, ACT, ASSERT** pattern is a simple way to organize your tests.
 
-## 1. Arrange
+## 1. ARRANGE
 Get everything ready for the test. This means setting up the things you need, like creating objects or preparing data.
 
 ```python
 # Example in Python
-calculator = Calculator()  # Arrange: Make a calculator
+calculator = Calculator()  # ARRANGE: Make a calculator
 number1 = 5
 number2 = 3
 expected_answer = 8
 ```
 
-## 2. Act
+## 2. ACT
 Do the thing you want to test. This usually means calling a function or running some code.
 
 ```python
-# Act: Use the calculator to add the numbers
+# ACT: Use the calculator to add the numbers
 actual_answer = calculator.add(number1, number2)
 ```
 
-## 3. Assert
+## 3. ASSERT
 Check if the result is what you expected. If it’s not, the test will fail.
 
 ```python
-# Assert: Make sure the answer is correct
+# ASSERT: Make sure the answer is correct
 assert actual_answer == expected_answer, f"Expected {expected_answer}, but got {actual_answer}"
 ```
 
 ## Example Test
-Here’s a full example using the Arrange, Act, Assert pattern:
+Here’s a full example using the ARRANGE, ACT, ASSERT pattern:
 
 ```python
 def test_addition():
-    # Arrange
+    # ARRANGE
     calculator = Calculator()
     number1 = 5
     number2 = 3
     expected_answer = 8
 
-    # Act
+    # ACT
     actual_answer = calculator.add(number1, number2)
 
-    # Assert
+    # ASSERT
     assert actual_answer == expected_answer, f"Expected {expected_answer}, but got {actual_answer}"
 ```
 

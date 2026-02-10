@@ -129,9 +129,20 @@ As an engineer, I want to be able to add a voting system to my fact service, so 
 
 ## Implementation Details
 
+### Database Layer
+#### Steps:
+**P3.1 Create the vote_fact function** in `database/vote_fact.py`:
+   - Accept fact_id and vote_type parameters
+   - Update the appropriate vote count (likes or dislikes) in the database
+   - Validate the vote_type parameter
+   - Return the updated Fact object with current vote counts
+   - Handle cases where the fact doesn't exist
+
+---
+
 ### HTTP Handler (REST)
 #### Steps:
-**Create the vote_route function** in `rest/vote_fact.py`:
+**P3.2 Create the vote_route function** in `rest/vote_fact.py`:
    - Handle POST requests with JSON data
    - Extract fact_id and vote_type from the request
    - Call the database vote_fact function
@@ -144,20 +155,9 @@ As an engineer, I want to be able to add a voting system to my fact service, so 
 
 ---
 
-### Database Layer
-#### Steps:
-**Create the vote_fact function** in `database/vote_fact.py`:
-   - Accept fact_id and vote_type parameters
-   - Update the appropriate vote count (likes or dislikes) in the database
-   - Validate the vote_type parameter
-   - Return the updated Fact object with current vote counts
-   - Handle cases where the fact doesn't exist
-
----
-
 ### REST Router
 #### Steps:
-**Update the router** in `rest/router.py`:
+**P3.3 Update the router** in `rest/router.py`:
    - Import the vote_route function
    - Add a new URL rule for "/api/vote" that accepts POST requests
    - This creates an API endpoint for voting functionality
@@ -165,7 +165,7 @@ As an engineer, I want to be able to add a voting system to my fact service, so 
 ---
 
 ### Unit Tests
-**Test the voting functionality**:
+**P3.4 Test the voting functionality**:
    - Test successful like and dislike votes
    - Test invalid vote types
    - Test voting on non-existent facts
@@ -173,7 +173,7 @@ As an engineer, I want to be able to add a voting system to my fact service, so 
 ---
 
 ### HTML Integration
-**Update the generate template** in `templates/generate.html`:
+**P3.5 Update the generate template** in `templates/generate.html`:
    - Add like and dislike buttons with vote counts
    - Include JavaScript to handle vote button clicks
    - Update vote counts dynamically without page refresh

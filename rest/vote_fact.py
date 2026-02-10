@@ -1,22 +1,19 @@
-from flask import jsonify, request
-from database import vote_fact
+# Task P3.2
+
+# TODO: Import necessary modules
 
 def vote_route():
     data = request.json
-    fact_id = data.get("fact_id")
-    vote_type = data.get("vote_type")
+    # TODO: Extract fact_id from the JSON data
+    # TODO: Extract vote_type from the JSON data
 
     try:
-        updated_fact = vote_fact(fact_id, vote_type)
-        
-        new_count = updated_fact.likes if vote_type == 'like' else updated_fact.dislikes
-        
-        response = {
-            "fact_id": updated_fact.id,
-            "new_count": new_count,
-            "likes": updated_fact.likes,
-            "dislikes": updated_fact.dislikes
-        }
-        return jsonify(response), 200
-    except ValueError as e:
+        # TODO: Call the vote_fact function to get the updated fact details after voting
+
+        # TODO: Determine the new count based on the vote type
+
+        # TODO: Create the response JSON with fact_id, new_count, likes, and dislikes
+        response = {}
+        return jsonify(response), 200 # Return the JSON response with status code 200 for successful vote
+    except ValueError as e: # Catch the ValueError raised by vote_fact for invalid vote types
         return jsonify({"error": str(e)}), 400
