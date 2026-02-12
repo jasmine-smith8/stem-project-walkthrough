@@ -1,13 +1,15 @@
-from fact import Fact
-from .provider import PostgresConnectionProvider
+# TASK P1.1, P4.2
 
-def create_fact(fact_text: str, category: str) -> Fact:
+# TODO: Import necessary modules
+
+# TODO: Add fact_test parameter
+# TODO: Add category parameter
+def create_fact() -> Fact:
     provider = PostgresConnectionProvider()
     with provider.cursor() as cur:
-        cur.execute(
-            "INSERT INTO facts (fact, category) VALUES (%s, %s) RETURNING id, fact, category, likes, dislikes;",
-            (fact_text, category)
-        )
+        cur.execute() # TODO: Write SQL query to add new fact to the database
+        # TODO: (Task P4.2) Add category to SQL query
         result = cur.fetchone()
         provider.commit()
-        return Fact(id=result[0], fact=result[1], category=result[2], likes=result[3] or 0, dislikes=result[4] or 0)
+        return Fact() # TODO: Create and return a Fact object using the data from the database result
+        # TODO: (Task P4.2) Add category to returned fact

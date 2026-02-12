@@ -1,4 +1,4 @@
-# Task P0.2 
+# Task P0.2, P4.3
 
 # Import necessary modules
 
@@ -12,9 +12,10 @@ def get_route():
         return jsonify({
             "id": getattr(fact, "id", None),
             "fact": fact.fact,
-            "category": getattr(fact, "category", None),
             "likes": getattr(fact, "likes", 0),
             "dislikes": getattr(fact, "dislikes", 0) 
+            # TODO: (Task P4.3) Add category
         })
     
     return render_template("generate.html") # Render the HTML template and pass the fact data to it
+    # TODO: (Task P4.3) Add category data

@@ -15,7 +15,7 @@
             <div class="create-fact-container" id="createForm">
                 <form action="/create" method="POST">
                     <textarea name="fact_text" placeholder="Enter your fact here..." required></textarea>
-                    <textarea name="category" placeholder="Enter category (e.g. science, animals)" required></textarea>
+                    <!-- TODO: Add a category textarea-->>
                     <button type="submit" class="fact-generator-button">Submit</button>
                 </form>
             </div>
@@ -26,7 +26,7 @@
                     <p>New fact created:</p>
                     <strong>{{ random_fact }}</strong>
                     {% if category %}
-                    <p>Category: <strong>{{ category }}</strong></p>
+                    <!-- TODO: Display category here-->>
                     {% endif %}
                 </div>
                 <button type="button" class="fact-generator-button" onclick="showCreateForm()">Create New Fact</button>

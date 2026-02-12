@@ -1,9 +1,9 @@
-# Tasks P0.3, P3.3
+# Tasks P0.3, P1.3, P3.3
 
 from flask import Flask
 from .home import home_route
 # TODO: Import the get_route function from the get_fact module
-from .create_fact import create_route
+# TODO: Import the create_route function from the vote_fact module
 # TODO: Import the vote_fact function from the vote_fact module
 
 def create_app():
@@ -13,7 +13,7 @@ def create_app():
 
     app.add_url_rule("/", view_func=home_route, methods=["GET"])
     # TODO: Add a URL rule for the generate route
-    app.add_url_rule("/create", view_func=create_route, methods=["GET","POST"]) # TASK
+    # TODO: Add a URL rule for the create route
     # TODO: Add a URL rule for the vote route
 
     return app
