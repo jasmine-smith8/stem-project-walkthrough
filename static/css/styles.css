@@ -170,19 +170,19 @@ body {
 /*TASK: Style the home page */
 .home-container {
     /*This is image that will be rendered on your website's home page. TASK: Select an image from static/images/backgrounds that suits your teams chosen UI design */
-    background-image: url("../images/mother-of-pearl.jpg");
+    background-image: url("../images/backgrounds/mother-of-pearl.jpg");
 }
 
 /*TASK: Style the generate fact page */
 .generate-container {
     /*This is image that will be rendered on your website's fact generation page. TASK: Select an image from static/images/backgrounds that suits your teams chosen UI design */
-    background-image: url("../images/paper.jpg");
+    background-image: url("../images/backgrounds/paper.jpg");
 }
 
 /*TASK: Style the create fact form page */
 .create-container {
     /*This is image that will be rendered on your website's fact creation form page. TASK: Select an image from static/images/backgrounds that suits your teams chosen UI design */
-    background-image: url("../images/mother-of-pearl.jpg");
+    background-image: url("../images/backgrounds/mother-of-pearl.jpg");
     background-color: rgba(255,255,255,0.6);
     background-blend-mode: lighten;
 }
@@ -320,10 +320,10 @@ body {
     margin-top: 2rem;
 }
 
-/* This is what makes the create fact form rise up when you navigate to the create fact page*/
 .create-fact-container {
     padding: 3rem 0;
     transition: all 0.3s ease;
+    /* This is what makes the create fact form rise up when you navigate to the create fact page*/
     animation: fadeInUp var(--animation-duration) ease-out 0.9s both;
     width: 100%;
 }

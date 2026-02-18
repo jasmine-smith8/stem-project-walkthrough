@@ -317,7 +317,7 @@ As a UI/UX engineer, I want my random fun fact generator to provide an accessibl
 In `static/css/styles.css`, identify areas you would like to update:
 
  - You will see a `#TASK` comment next to any colour or fonts that can be customised.
- - This tasks is flexible, so collaborate with your team to come up with a cohesive theme that will fit with your implementation and branding.
+ - This task is flexible, so collaborate with your team to come up with a cohesive theme that will fit with your implementation and branding.
 
 # P3: Random Fun Fact Voting System
 As an engineer, I want to be able to add a voting system to my fact service, so that I can track which facts my team like or dislike.
