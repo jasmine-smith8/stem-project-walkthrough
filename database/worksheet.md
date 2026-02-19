@@ -52,3 +52,10 @@ Write queries to:
 
 
 7)	Delete the row with CustomerID ‘2’  from the ‘Customers’ table
+
+## Hint: 
+
+For your random fact generation to work, you will need to include these statements:
+
+- ORDER BY RANDOM() - pick a fact from the database at random
+- LIMIT 1 - limit to one fact at a time

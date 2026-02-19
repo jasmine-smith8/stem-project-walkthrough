@@ -1,6 +1,7 @@
 # Tasks P1.1, P4.2
 
-# TODO: Import necessary modules
+from fact import Fact
+from .provider import PostgresConnectionProvider
 
 # TODO: (Task P1.1) Add fact_test parameter
 # TODO: (Task P4.2) Add category parameter
