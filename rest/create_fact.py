@@ -5,7 +5,7 @@ from database import create_fact
 
 def create_route():
     if request.method == "GET":
-        # TODO: Render the create.html template
+        # TODO: (Task P1.2) Render the create.html template
 
     if request.method == "POST":
         # TODO: Get the fact_text from the form
