@@ -11,5 +11,5 @@ def create_fact() -> Fact:
         # TODO: (Task P4.2) Add category to SQL query
         result = cur.fetchone()
         provider.commit()
-        return Fact() # TODO: Create and return a Fact object using the data from the database result
+        return Fact() # TODO: (Task P1.1) Create and return a Fact object using the data from the database result
         # TODO: (Task P4.2) Add category to returned fact
