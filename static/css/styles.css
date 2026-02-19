@@ -39,7 +39,42 @@ html {
     scroll-behavior: smooth;
 }
 
+/* 
+Here is a provided list of common fonts you can use in your CSS. 
+You can also explore other fonts on Google Fonts and add them to your project by importing them at the top of this CSS file - feel free to ask for your mentor's help if you are unsure of how to do this!
+*/  
+/* Serif Fonts
+    font-family: Times, serif;
+    font-family: "Times New Roman", serif;
+    font-family: Georgia, serif;
+    font-family: serif;
+*/
+
+/* Sans-serif Fonts
+    font-family: Arial, sans-serif;
+    font-family: Helvetica, sans-serif;
+    font-family: Verdana, sans-serif;
+    font-family: "Trebuchet MS", sans-serif;
+    font-family: Tahoma, sans-serif;
+    font-family: sans-serif; 
+*/
+
+/* Monospace Fonts
+    font-family: "Courier New", monospace;
+    font-family: Courier, monospace;
+    font-family: monospace; 
+*/
+
+/* Popular Combinations 
+    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Times New Roman", Times, serif;
+    font-family: Verdana, Arial, sans-serif; 
+*/
+
 body {
+    /* OPTIONAL TASK: Change the default font of your website by changing the font-family property below!
+        You can choose from the provided list of common fonts above - these will be your fallback fonts in case your chosen font fails to load
+    */
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     line-height: 1.6;
     animation: fadeInUp var(--animation-duration) ease-out;
@@ -51,24 +86,33 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 20px 30px;
+    /*  TASK: Change colour of your navbar (the bar at the top of your website that contains the links to different pages) and text colour */
+    /* OPTIONAL TASK: Change the intensity of the background blur effect */
     background-color: rgba(255, 255, 255, 0.7);
     color: #493b3b;
     backdrop-filter: blur(10px);
+    /* END OF TASK */
     animation: slideInTop var(--animation-duration) ease-out;
     transition: all 0.3s ease;
 }
 
 .navbar a {
     text-decoration: none;
+    /*  TASK: Change font of your navbar item text */
+    /* OPTIONAL TASK: Change font size and boldness of your navbar item text */
     font-family: Rockwell, "Courier Bold", Courier, Georgia, Times, "Times New Roman", serif;
     font-size: 1.8rem;
     font-weight: 500;
+    /*END OF TASK*/
     padding: 14px 16px;
+    /*  TASK: Change colour of your navbar item text */
     color: #493b3b;
+    /* END OF TASK */
     transition: all 0.3s ease;
     position: relative;
 }
 
+/* This creates the enlarging effect on hover for the navbar items */
 .navbar a::after {
     content: '';
     position: absolute;
@@ -81,18 +125,23 @@ body {
     transform: translateX(-50%);
 }
 
+/* TASK: Change the colour of your navbar item text on hover and the colour of the underline that appears when you hover (currently a light brown!) */
 .navbar a:hover {
     color: #776767;
 }
 
+/* This makes the underline grow to 80% width when you hover over a navbar item */
 .navbar a:hover::after {
     width: 80%;
 }
 
 .navbar .logo {
+    /*  TASK: Change font of your navbar logo text */
+    /* OPTIONAL TASK: Change font size and boldness of your navbar logo text */
     font-family: Rockwell, "Courier Bold", Courier, Georgia, Times, "Times New Roman", serif;
     font-weight: bolder;
     font-size: 2.2rem;
+    /*END OF TASK*/
     background: linear-gradient(45deg, #493b3b, #776767);
     -webkit-background-clip: text;
     background-clip: text;
@@ -118,26 +167,28 @@ body {
     opacity: 0.8;
 }
 
-/*TASK: Style the home page container */
+/*TASK: Style the home page */
 .home-container {
-    background-image: url("../images/mother-of-pearl.jpg");
+    /*This is image that will be rendered on your website's home page. TASK: Select an image from static/images/backgrounds that suits your teams chosen UI design */
+    background-image: url("../images/backgrounds/mother-of-pearl.jpg");
 }
 
-/*TASK: Style the generate fact container */
+/*TASK: Style the generate fact page */
 .generate-container {
-    background-image: url("../images/paper.jpg");
+    /*This is image that will be rendered on your website's fact generation page. TASK: Select an image from static/images/backgrounds that suits your teams chosen UI design */
+    background-image: url("../images/backgrounds/paper.jpg");
 }
 
-/*TASK: Style the create fact container */
+/*TASK: Style the create fact form page */
 .create-container {
-    background-image: url("../images/neural-network.jpg");
+    /*This is image that will be rendered on your website's fact creation form page. TASK: Select an image from static/images/backgrounds that suits your teams chosen UI design */
+    background-image: url("../images/backgrounds/mother-of-pearl.jpg");
     background-color: rgba(255,255,255,0.6);
     background-blend-mode: lighten;
 }
 
 .main-container {
     flex: 1;
-    /* replace large vertical margins with padding for consistent spacing */
     margin: 0;
     padding: 6rem 4rem 3rem;
     display: flex;
@@ -147,16 +198,17 @@ body {
     gap: 2.3rem;
     text-align: center;
     font-size: 1.4rem;
+    /* OPTIONAL TASK: Change the colour of the page's text (currently a very dark brown!) */
     color: #1d1717;
     animation: fadeInUp var(--animation-duration) ease-out 0.3s both;
 }
 
 .main-container h1 {
     /*TASK: Choose font for your headings */
-    font-family: Rockwell, "Courier Bold", Courier, Georgia, Times, "Times New Roman", serif;
+    font-family: Georgia, "Times New Roman", serif;
     font-size: 3.5rem;
     font-weight: 700;
-    /**/
+    /*END OF TASK*/
     margin-bottom: 1rem;
     background: linear-gradient(45deg, #1d1717, #493b3b);
     -webkit-background-clip: text;
@@ -167,22 +219,37 @@ body {
 .main-container p {
     /*TASK: Choose font for your main text */
     font-family: 'Inter', sans-serif;
+    /* OPTIONAL TASK: Change font size, boldness, opacity of your main text */
     font-size: 1.4rem;
     font-weight: 400;
-    margin-bottom: 2rem;
     opacity: 0.9;
+    /*END OF TASK*/
+    margin-bottom: 2rem;
 }
 
 .fact-generator-button {
+    /*TASK: Choose font for your home page fact generator button text */
     font-family: 'Inter', sans-serif;
+    /* OPTIONAL TASK: 
+        - Change font size, boldness of your button text
+        - Change border radius to make your button more/less rounded (currently set to 15px for a soft, rounded look)
+    */
     font-size: 1.1rem;
     font-weight: 600;
-    padding: 18px 35px;
     border-radius: 15px;
-    /*TASK: Change colour */
+    /*END OF TASK*/
+    padding: 18px 35px;
+    /*TASK: Change colour of the button */
+    /* 
+    The background is a gradient that gives the button a soft, elegant look. 
+    You can experiment with different color combinations to find one that suits your design aesthetic. 
+    The border color can be adjusted to create a stronger or softer outline, depending on the look you're going for.
+    The text color can also be changed to ensure good contrast and readability against the background colors you choose!
+    */
     background: linear-gradient(135deg, #ecc2bd, #f2d4d3);
     border: 2px solid #b59390;
     color: #292121;
+    /*END OF TASK*/
     cursor: pointer;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     box-shadow: 0 4px 15px rgba(236, 194, 189, 0.3);
@@ -198,12 +265,17 @@ body {
     left: -100%;
     width: 100%;
     height: 100%;
+    /*OPTIONAL TASK: Change colour of button shimmer (currently a silvery white!)  */
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
     transition: left 0.5s;
 }
 
 .fact-generator-button:hover {
-     /*TASK: Change colour */
+    /*TASK: Change colour of button hover effect */
+    /* 
+    Currently matches the background gradient but with a slightly stronger pink tone and a subtle shadow to give it a lifted appearance.
+    Change the colors in the gradient to create a different hover effect that fits your design style!
+    */
     background: linear-gradient(135deg, #f2d4d3, #f7e6e5);
     transform: translateY(-3px) scale(1.05);
     box-shadow: 0 8px 25px rgba(236, 194, 189, 0.5);
@@ -213,6 +285,7 @@ body {
     left: 100%;
 }
 
+/* This transform effect mimics a press and release action when the button is clicked */
 .fact-generator-button:active {
     transform: translateY(-1px) scale(1.02);
 }
@@ -222,6 +295,11 @@ body {
     padding: 3rem 5rem;
     border-radius: 15px;
     /*TASK: Change colour */
+    /* 
+    The background is a semi-transparent light gray with a blur effect, giving it a frosted glass appearance. 
+    You can change the background colour to match your theme!
+    The blur radius can be adjusted to increase or decrease the frosted effect.
+    */
     background-color: rgba(241, 241, 241, 0.8);
     backdrop-filter: blur(10px);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
@@ -230,7 +308,7 @@ body {
 }
 
 .fact-container p {
-    /*TASK: Change font */
+    /*TASK: Change font in your fact display box */
     font-family: 'Playfair Display', serif;
     font-size: 1.3rem;
     line-height: 1.8;
@@ -245,6 +323,7 @@ body {
 .create-fact-container {
     padding: 3rem 0;
     transition: all 0.3s ease;
+    /* This is what makes the create fact form rise up when you navigate to the create fact page*/
     animation: fadeInUp var(--animation-duration) ease-out 0.9s both;
     width: 100%;
 }
@@ -261,7 +340,12 @@ body {
     font-family: 'Inter', sans-serif;
     transition: all 0.3s ease;
     resize: none;
-    /*TASK: Change colour */
+    /*TASK: Change colour of your create fact page form */
+    /* 
+    The background is a semi-transparent light gray with a blur effect, giving it a frosted glass appearance. 
+    You can change the background colour to match your theme!
+    The blur radius can be adjusted to increase or decrease the frosted effect.
+    */
     background-color: rgba(241, 241, 241, 0.9);
     backdrop-filter: blur(50px);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
@@ -270,7 +354,7 @@ body {
 }
 
 .create-fact-container textarea::placeholder {
-    /*TASK: Change colour */
+    /*OPTIONAL TASK: Change colour/font of placeholder text */
     color: #776767;
     font-family: 'Playfair Display', serif;
     font-style: italic;
@@ -289,6 +373,28 @@ body {
     box-shadow: 0 0 10px rgba(73, 59, 59, 0.5);
 }
 
+footer {
+    /*TASK: Change colour of footer (bar at the bottom of the screen) */
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    padding: 30px 0;
+    text-align: center;
+    position: relative;
+    width: 100%;
+    z-index: 1000;
+    opacity: 0.7;
+    /* TASK: Change font of footer text */
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    color: #6c757d;
+    backdrop-filter: blur(5px);
+    animation: slideInLeft var(--animation-duration) ease-out 1.2s both;
+    transition: all 0.3s ease;
+    margin-top: auto; /* pushes footer to bottom */
+    left: 0;
+    right: 0;
+}
+
+/* END OF P2 TASKS - OPTIONAL: You can add your own custom styles below to further personalise your website, if your team is able to implement the extension features! */
 .voting-container {
     display: flex;
     align-items: center;
@@ -321,6 +427,7 @@ body {
 .dislike-button:hover {
     transform: scale(1.1) rotate(180deg);
 }
+
 .vote-count {
     font-family: 'Inter', sans-serif;
     font-size: 1.2rem;
@@ -328,25 +435,4 @@ body {
     color: #1d1717;
     min-width: 30px;
     text-align: center;
-}
-
-
-footer {
-    /*TASK: Change colour */
-    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-    padding: 30px 0;
-    text-align: center;
-    position: relative;
-    width: 100%;
-    z-index: 1000;
-    opacity: 0.7;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.9rem;
-    color: #6c757d;
-    backdrop-filter: blur(5px);
-    animation: slideInLeft var(--animation-duration) ease-out 1.2s both;
-    transition: all 0.3s ease;
-    margin-top: auto;        /* pushes footer to bottom */
-    left: 0;
-    right: 0;
 }

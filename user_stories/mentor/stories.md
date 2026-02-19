@@ -307,19 +307,19 @@ In `templates/create.html`:
 ```
 2. Visit `http://127.0.0.1:5000/create` to see the form.
 
-# P1: Random Fun Fact Website Design
+# P2: Random Fun Fact Website Design
 As a UI/UX engineer, I want my random fun fact generator to provide an accessible user experience whilst maintaining a clear theme.
 
 ## Implementation Details
 
-### CSS Implementation
+### P2.1 CSS Implementation
 
 In `static/css/styles.css`, identify areas you would like to update:
 
  - You will see a `#TASK` comment next to any colour or fonts that can be customised.
- - This tasks is flexible, so collaborate with your team to come up with a cohesive theme that will fit with your implementation and branding.
+ - This task is flexible, so collaborate with your team to come up with a cohesive theme that will fit with your implementation and branding.
 
-# P2: Random Fun Fact Voting System
+# P3: Random Fun Fact Voting System
 As an engineer, I want to be able to add a voting system to my fact service, so that I can track which facts my team like or dislike.
 
 ---
@@ -590,7 +590,7 @@ In `templates/generate.html`:
 ```
 2. Visit `http://127.0.0.1:5000/generate` and your voting buttons should appear below the fact with number of votes.
 
-# P2: Random Fun Fact Filter
+# P4: Random Fun Fact Filter
 As an engineer, I want to be able to filter facts by categories, so that I can tailor my facts to the audience.
 
 ---
