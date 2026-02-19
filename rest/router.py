@@ -2,7 +2,7 @@
 
 from flask import Flask
 from .home import home_route
-# TODO: Import the get_route function from the get_fact module
+# TODO: (Task P0.3) Import the get_route function from the get_fact module
 # TODO: (Task P1.3) Import the create_route function from the create_fact module
 # TODO: (Task P3.3) Import the vote_fact function from the vote_fact module
 
