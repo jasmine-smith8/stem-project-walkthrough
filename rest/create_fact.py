@@ -14,6 +14,6 @@ def create_route():
 
         # TODO: (Task P1.2) Check that fact text is provided, if not return an error
         
-        # TODO: Call the create_fact function from the database folder
+        # TODO: (Task P1.2) Call the create_fact function from the database folder
 
         return render_template() # TODO: Pass the HTML template, fact and category (Task P4.3) parameters
