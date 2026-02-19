@@ -1,4 +1,4 @@
-# TASK P1.1, P4.2
+# Tasks P1.1, P4.2
 
 # TODO: Import necessary modules
 
