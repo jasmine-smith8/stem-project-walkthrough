@@ -12,7 +12,7 @@ def create_route():
 
         # TODO: (Task P4.3) Get the category from the form
 
-        # TODO: Check that fact text is provided, if not return an error
+        # TODO: (Task P1.2) Check that fact text is provided, if not return an error
         
         # TODO: Call the create_fact function from the database folder
 
