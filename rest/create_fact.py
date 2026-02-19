@@ -8,7 +8,7 @@ def create_route():
         # TODO: (Task P1.2) Render the create.html template
 
     if request.method == "POST":
-        # TODO: Get the fact_text from the form
+        # TODO: (Task P1.2) Get the fact_text from the form
 
         # TODO: (Task P4.3) Get the category from the form
 
