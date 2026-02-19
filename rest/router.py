@@ -12,7 +12,7 @@ def create_app():
                 static_folder='../static')
 
     app.add_url_rule("/", view_func=home_route, methods=["GET"])
-    # TODO: Add a URL rule for the generate route
+    # TODO: (Task P0.3) Add a URL rule for the generate route
     # TODO: Add a URL rule for the create route
     # TODO: Add a URL rule for the vote route
 
