@@ -2,7 +2,7 @@
 
 # TODO: Import necessary modules
 
-# TODO: Add fact_test parameter
+# TODO: (Task P1.1) Add fact_test parameter
 # TODO: Add category parameter
 def create_fact() -> Fact:
     provider = PostgresConnectionProvider()
