@@ -7,7 +7,7 @@
 def create_fact() -> Fact:
     provider = PostgresConnectionProvider()
     with provider.cursor() as cur:
-        cur.execute() # TODO: Write SQL query to add new fact to the database
+        cur.execute() # TODO: (Tasks P1.1 & P4.2) Write SQL query to add new fact to the database
         # TODO: (Task P4.2) Add category to SQL query
         result = cur.fetchone()
         provider.commit()
