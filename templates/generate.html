@@ -12,7 +12,7 @@
         <div class="main-container">
             <h1>Random Fact Generator</h1>
             <div class="fact-container">
-                <p>Your random <strong id="fact-category">{{ category }}</strong> fact is: </p>
+                <!-- TODO: Display the fact category here -->
                 <strong id="fact-text">{{ random_fact }}</strong>
             </div>
             <div class="voting-container">
@@ -69,8 +69,6 @@
                 factText.style.opacity = '0.5';
                 setTimeout(() => {
                     factText.textContent = data.fact;
-                    const categoryEl = document.getElementById('fact-category');
-                    if (categoryEl) categoryEl.textContent = data.category || 'Uncategorized';
                     factText.style.opacity = '1';
                     
                     // Update voting counts and button attributes for the new fact
@@ -88,6 +86,8 @@
                     likeCount.textContent = data.likes;
                     dislikeCount.id = `dislike-count-${data.id}`;
                     dislikeCount.textContent = data.dislikes;
+
+                    // TODO: Handle category information
                     
                 }, 200);
             } catch (error) {

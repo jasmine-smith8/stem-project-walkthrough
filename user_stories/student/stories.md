@@ -67,12 +67,24 @@ Some unit tests have been implemented for you as an example, you may not need to
 As an engineer, I want to be able to create my own fun facts, so that I can expand the fact list and never run out of new ones.
 
 ---
-
 ## Implementation Details
+
+### Database Layer
+#### Steps:
+**P1.1 Implement the create_fact function** in `database/create_fact.py`:
+   - Import the PostgresConnectionProvider from database/provider.py
+   - Import the Fact class from fact.py
+   - Accept a fact_text parameter
+   - Execute a SQL query to insert the new fact
+   - Use RETURNING clause to get the new fact's ID
+   - Return a Fact object with the new fact data
+
+---
+
 
 ### HTTP Handler (REST)
 #### Steps:
-**EDIT the create_route function** in `rest/create_fact.py`:
+**P1.2 EDIT the create_route function** in `rest/create_fact.py`:
    - Handle both GET and POST requests in the same function
    - For GET requests: render a form template
    - For POST requests: extract the fact text from the form data
@@ -80,22 +92,12 @@ As an engineer, I want to be able to create my own fun facts, so that I can expa
    - Call the database `create_fact` function
    - Return the template with the newly created fact
 
----
-
-### Database Layer
-#### Steps:
-**EDIT the create_fact function** in `database/create_fact.py`:
-   - Accept a fact_text parameter
-   - Create a database connection
-   - Execute an INSERT SQL statement to add the new fact
-   - Use RETURNING clause to get the new fact's ID
-   - Commit the transaction and return a Fact object
 
 ---
 
 ### REST Router
 #### Steps:
-**Update the router** in `rest/router.py`:
+**P1.3 Update the router** in `rest/router.py`:
    - Import the create_route function
    - Add a new URL rule for "/create" that accepts both GET and POST methods
    - Test by visiting `/create` to see the form and submit new facts
@@ -103,10 +105,9 @@ As an engineer, I want to be able to create my own fun facts, so that I can expa
 ---
 
 ### Unit Tests
-**Test the create functionality**:
-   - Test successful fact creation
-   - Test validation (empty fact text)
-   - Test database errors
+**P1.4 Implement unit tests** in the test files which are following the pattern `filename_test.py`:
+
+You can use the tests from the previous tasks as a guide here.
 
 ---
 
@@ -188,26 +189,48 @@ As an engineer, I want to be able to filter facts by categories, so that I can t
 
 ## Implementation Details
 
-### HTTP Handler (REST)
-#### Steps:
-**Update the get_route function** in `rest/get_fact.py`:
-   - Include category information in JSON responses
-   - Pass category data to the HTML template
-
----
+First, we want to modify our existing workflows to include category information, so we can input a category when creating a fact and include that information in the display.
 
 ### Database Layer
 #### Steps:
-**Update the get_fact function** in `database/get_fact.py`:
+**P4.1 Update the get_fact function** in `database/get_fact.py`:
+   - Modify the SQL query to include the category column
+   - Update the Fact object creation to include category information
+
+**P4.2 Update the create_fact function** in `database/create_fact.py`:
+   - Add category as an input parameter
    - Modify the SQL query to include the category column
    - Update the Fact object creation to include category information
 
 ---
 
+### HTTP Handler (REST)
+#### Steps:
+**P4.3 Update the get_route function** in `rest/get_fact.py`:
+   - Include category information in JSON responses
+   - Pass category data to the HTML template
+
+**P4.4 Update the create_route function** in `rest/create_fact.py`:
+   - Get the category data from the form
+   - Pass the category data to the render_template function
+
+### Unit Tests
+#### Steps:
+**P4.3 Update the unit tests**:
+   - Update any implemented unit tests to include the addition of a category field.
+---
+
 ### HTML Integration
-**Update the generate template** in `templates/generate.html`:
+**P4.4 Update the generate template** in `templates/generate.html`:
    - Display the fact category in the user interface
    - Update JavaScript to handle category information when fetching new facts
    - Style the category display appropriately
 
+**P4.5 Update the create template** in `templates/create.html`:
+   - Add a category textarea to the input form.
+   - Display the fact category in the user interface
 ---
+
+Now that we are able to handle categories in our existing workflows, we can enhance them by adding the ability to filter facts by categories.
+
+TODO: Write the code and tasks for this bit

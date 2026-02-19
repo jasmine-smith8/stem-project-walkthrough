@@ -1,13 +1,19 @@
+# TASKS P1.2, P4.3
+
 from flask import render_template, request
 from database import create_fact
 
 def create_route():
     if request.method == "GET":
-        return render_template("create.html")
+        # TODO: (Task P1.2) Render the create.html template
+
     if request.method == "POST":
-        fact_text = request.form.get("fact_text")
-        category = request.form.get("category") 
-        if not fact_text:
-            return "Fact text is required", 400
-        fact_create_entity = create_fact(fact_text, category)
-        return render_template("create.html", random_fact=fact_create_entity.fact, category=fact_create_entity.category)
+        # TODO: (Task P1.2) Get the fact_text from the form
+
+        # TODO: (Task P4.3) Get the category from the form
+
+        # TODO: (Task P1.2) Check that fact text is provided, if not return an error
+        
+        # TODO: (Task P1.2) Call the create_fact function from the database folder
+
+        return render_template() # TODO: (Task P1.2) Pass the HTML template, fact and category (Task P4.3) parameters
