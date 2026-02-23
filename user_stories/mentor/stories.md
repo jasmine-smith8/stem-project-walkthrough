@@ -7,11 +7,31 @@ As an engineer, I want to be able to get a random fun fact from a database, so t
 
 ## Implementation Details
 
+### Database Layer
+The database implementation fetches a single random fact from the PostgreSQL database.
+
+#### Steps:
+1. P0.1 Implement the `get_fact()` method in `get_fact.py`.
+
+```python
+def get_fact() -> Fact:
+    provider = PostgresConnectionProvider()
+    with provider.cursor() as cur:
+        cur.execute("SELECT id, fact FROM facts ORDER BY RANDOM() LIMIT 1;")
+        result = cur.fetchone()
+        if result:
+            return Fact(id=result[0], fact=result[1])
+        else:
+            return Fact(id=None, fact="No facts found.")
+```
+
+---
+
 ### HTTP Handler (REST)
 The handler bridges the database layer and the UI layer, allowing the random fact generator page to display facts and fetch new ones without page refreshes. Prior to the implementation of HTML, this will just be a JSON response.
 
 #### Steps:
-1. Implement the `get_route()` method in `get_fact.py`.
+1. P0.2 Implement the `get_route()` method in `get_fact.py`.
 
 ```python
 def get_route():
@@ -30,29 +50,9 @@ def get_route():
 
 ---
 
-### Database Layer
-The database implementation fetches a single random fact from the PostgreSQL database.
-
-#### Steps:
-1. Implement the `get_fact()` method in `get_fact.py`.
-
-```python
-def get_fact() -> Fact:
-    provider = PostgresConnectionProvider()
-    with provider.cursor() as cur:
-        cur.execute("SELECT id, fact FROM facts ORDER BY RANDOM() LIMIT 1;")
-        result = cur.fetchone()
-        if result:
-            return Fact(id=result[0], fact=result[1])
-        else:
-            return Fact(id=None, fact="No facts found.")
-```
-
----
-
 ### REST Router
 #### Steps:
-1. Add a `generate` route with a `GET` method to `router.py`.
+1. P0.3 Add a `generate` route with a `GET` method to `router.py`.
 
 ```python
 from flask import Flask
@@ -75,14 +75,14 @@ def create_app():
 ```
 ---
 
-### Unit Tests
+### Unit Tests (P0.4)
 1. Add unit tests to cover the generate fact logic.
 2. Place tests in the same directory as the original file, following the convention `filename_test.py`.
 3. Reference the given happy path & unit test guide located in the same folder and encourage students to think about negative cases to improve test coverage.
 
 ---
 
-### HTML Integration
+### HTML Integration (Optional)
 1. Add HTML to present the fact nicely.
 
 In `templates/generate.html`:
@@ -145,32 +145,11 @@ As an engineer, I want to be able to create my own fun facts, so that I can expa
 
 ## Implementation Details
 
-### HTTP Handler (REST)
-The handler bridges the database layer and the UI layer, allowing the random fact generator page to display facts and fetch new ones without page refreshes. Prior to the implementation of HTML, this will just be a JSON response.
-
-#### Steps:
-1. Implement the `create_route()` method in `create_fact.py`.
-
-```python
-def create_route():
-    if request.method == "GET":
-        return render_template("create.html")
-        #GET method to render the create form
-    if request.method == "POST":
-        fact_text = request.form.get("fact_text")
-        if not fact_text:
-            return "Fact text is required", 400
-        fact_create_entity = create_fact(fact_text)
-        return render_template("create.html", random_fact=fact_create_entity.fact)
-```
-
----
-
 ### Database Layer
 The database implementation fetches a single random fact from the PostgreSQL database.
 
 #### Steps:
-1. Implement the `create_fact()` method in `create_fact.py`.
+1. P1.1 Implement the `create_fact()` method in `create_fact.py`.
 
 ```python
 def create_fact(fact_text: str) -> Fact:
@@ -187,9 +166,30 @@ def create_fact(fact_text: str) -> Fact:
 
 ---
 
+### HTTP Handler (REST)
+The handler bridges the database layer and the UI layer, allowing the random fact generator page to display facts and fetch new ones without page refreshes. Prior to the implementation of HTML, this will just be a JSON response.
+
+#### Steps:
+1. P1.2 Edit the `create_route()` method in `create_fact.py`.
+
+```python
+def create_route():
+    if request.method == "GET":
+        return render_template("create.html")
+        #GET method to render the create form
+    if request.method == "POST":
+        fact_text = request.form.get("fact_text")
+        if not fact_text:
+            return "Fact text is required", 400
+        fact_create_entity = create_fact(fact_text)
+        return render_template("create.html", random_fact=fact_create_entity.fact)
+```
+
+---
+
 ### REST Router
 #### Steps:
-1. Add a `create` route with a `GET` and a `POST` method to `router.py`. 
+1. P1.3 Add a `create` route with a `GET` and a `POST` method to `router.py`. 
 
 Both methods are needed: 
 
@@ -225,14 +225,14 @@ def create_app():
 ```
 ---
 
-### Unit Tests
+### Unit Tests (P1.4)
 1. Add unit tests to cover the create fact logic.
 2. Place tests in the same directory as the original file, following the convention `filename_test.py`.
 3. Reference the given happy path & unit test guide located in the same folder and encourage students to think about negative cases to improve test coverage.
 
 ---
 
-### HTML Integration
+### HTML Integration (Optional)
 1. Add HTML in order to create a form, which will be used to enter in the fact data.
 
 In `templates/create.html`:
@@ -320,63 +320,11 @@ As an engineer, I want to be able to add a voting system to my fact service, so 
 
 ## Implementation Details
 
-### HTTP Handler (REST)
-The handler bridges the database layer and the UI layer, allowing the random fact generator page to display facts and fetch new ones without page refreshes. Prior to the implementation of HTML, this will just be a JSON response.
-
-#### Steps:
-1. Implement the `vote_route()` method in `vote_fact.py`.
-
-```python
-def vote_route():
-    data = request.json
-    fact_id = data.get("fact_id")
-    vote_type = data.get("vote_type")
-
-    try:
-        updated_fact = vote_fact(fact_id, vote_type)
-        
-        new_count = updated_fact.likes if vote_type == 'like' else updated_fact.dislikes
-        
-        response = {
-            "fact_id": updated_fact.id,
-            "new_count": new_count,
-            "likes": updated_fact.likes,
-            "dislikes": updated_fact.dislikes
-        }
-        return jsonify(response), 200
-    except ValueError as e:
-        return jsonify({"error": str(e)}), 400
-```
-
----
-
-2. Update the `get_route()` method in `get_fact.py`.
-
-```python
-def get_route():
-    fact = get_fact()
-    wants_json = request.args.get("json") in ("1", "true", "True")
-    if wants_json:
-        return jsonify({
-            "id": getattr(fact, "id", None),
-            "fact": fact.fact,
-            "likes": getattr(fact, "likes", 0), #TASK
-            "dislikes": getattr(fact, "dislikes", 0) #TASK
-        })
-    return render_template("generate.html",
-                         random_fact=fact.fact,
-                         random_fact_id=fact.id,
-                         random_fact_likes=getattr(fact, "likes", 0), #TASK
-                         random_fact_dislikes=getattr(fact, "dislikes", 0)) #TASK
-```
-
----
-
 ### Database Layer
 The database implementation fetches a single random fact from the PostgreSQL database.
 
 #### Steps:
-1. Implement the `vote_fact()` method in `vote_fact.py`.
+1. P3.1 Implement the `vote_fact()` method in `vote_fact.py`.
 
 ```python
 def vote_fact(fact_id: int, vote_type: str) -> Fact:
@@ -409,9 +357,61 @@ def vote_fact(fact_id: int, vote_type: str) -> Fact:
 
 ---
 
+### HTTP Handler (REST)
+The handler bridges the database layer and the UI layer, allowing the random fact generator page to display facts and fetch new ones without page refreshes. Prior to the implementation of HTML, this will just be a JSON response.
+
+#### Steps:
+1. P3.2 Implement the `vote_route()` method in `vote_fact.py`.
+
+```python
+def vote_route():
+    data = request.json
+    fact_id = data.get("fact_id")
+    vote_type = data.get("vote_type")
+
+    try:
+        updated_fact = vote_fact(fact_id, vote_type)
+        
+        new_count = updated_fact.likes if vote_type == 'like' else updated_fact.dislikes
+        
+        response = {
+            "fact_id": updated_fact.id,
+            "new_count": new_count,
+            "likes": updated_fact.likes,
+            "dislikes": updated_fact.dislikes
+        }
+        return jsonify(response), 200
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+```
+
+---
+
+2. P3.2 Update the `get_route()` method in `get_fact.py`.
+
+```python
+def get_route():
+    fact = get_fact()
+    wants_json = request.args.get("json") in ("1", "true", "True")
+    if wants_json:
+        return jsonify({
+            "id": getattr(fact, "id", None),
+            "fact": fact.fact,
+            "likes": getattr(fact, "likes", 0), #TASK
+            "dislikes": getattr(fact, "dislikes", 0) #TASK
+        })
+    return render_template("generate.html",
+                         random_fact=fact.fact,
+                         random_fact_id=fact.id,
+                         random_fact_likes=getattr(fact, "likes", 0), #TASK
+                         random_fact_dislikes=getattr(fact, "dislikes", 0)) #TASK
+```
+
+---
+
 ### REST Router
 #### Steps:
-1. Add an `api/vote` route with a `POST` method to `router.py`. 
+1. P3.3 Add an `api/vote` route with a `POST` method to `router.py`. 
 
 - `POST` to insert the vote into the database.
 
@@ -437,7 +437,9 @@ def create_app():
     return app
 ```
 
-### Unit Tests
+---
+
+### Unit Tests (P3.4)
 1. Add unit tests to cover the vote fact logic.
 2. Place tests in the same directory as the original file, following the convention `filename_test.py`.
 3. Reference the given happy path & unit test guide located in the same folder and encourage students to think about negative cases to improve test coverage.
@@ -445,7 +447,7 @@ def create_app():
 ---
 
 ### HTML Integration
-1. Add HTML in order to create a form, which will be used to enter in the fact data.
+1. P3.5 Add HTML in order to create a form, which will be used to enter in the fact data.
 
 In `templates/generate.html`:
 ```html
@@ -591,11 +593,45 @@ As an engineer, I want to be able to filter facts by categories, so that I can t
 
 ## Implementation Details
 
+### Database Layer
+The database implementation fetches a single random fact from the PostgreSQL database.
+
+#### Steps:
+1. P4.1 Update the `get_fact()` method in `get_fact.py`.
+
+```python
+def get_fact() -> Fact:
+    provider = PostgresConnectionProvider()
+    with provider.cursor() as cur:    # TASK
+        cur.execute("SELECT id, fact, category, likes, dislikes FROM facts ORDER BY RANDOM() LIMIT 1;")
+        result = cur.fetchone()
+        if result:                                      # TASK
+            return Fact(id=result[0], fact=result[1], category=result[2], likes=result[3], dislikes=result[4])
+        else:                                           # TASK
+            return Fact(id=None, fact="No facts found.", category="none", likes=0, dislikes=0)
+```
+
+2. P4.2 Update the `create_fact()` method in `create_fact.py`.
+
+```python
+def create_fact(fact_text: str, category: str) -> Fact:
+    provider = PostgresConnectionProvider()
+    with provider.cursor() as cur:
+        cur.execute(
+            "INSERT INTO facts (fact, category) VALUES (%s, %s) RETURNING id, fact, category, likes, dislikes;",    # TASK
+            (fact_text, category)   # TASK
+        )
+        result = cur.fetchone()
+        provider.commit()
+        return Fact(id=result[0], fact=result[1], category=result[2], likes=result[3] or 0, dislikes=result[4] or 0)    # TASK
+```
+---
+
 ### HTTP Handler (REST)
 The handler bridges the database layer and the UI layer, allowing the random fact generator page to display facts and fetch new ones without page refreshes. 
 
 #### Steps:
-1. Update the `get_route()` method in `get_fact.py`.
+1. P4.3 Update the `get_route()` method in `get_fact.py`.
 
 ```python
 def get_route():
@@ -605,41 +641,36 @@ def get_route():
         return jsonify({
             "id": getattr(fact, "id", None),
             "fact": fact.fact,
-            "category": getattr(fact, "category", None), #TASK
+            "category": getattr(fact, "category", None), # TASK
             "likes": getattr(fact, "likes", 0),
             "dislikes": getattr(fact, "dislikes", 0) 
         })
     return render_template("generate.html",
                          random_fact=fact.fact,
-                         category=fact.category, #TASK
+                         category=fact.category, # TASK
                          random_fact_id=fact.id,
                          random_fact_likes=getattr(fact, "likes", 0),
                          random_fact_dislikes=getattr(fact, "dislikes", 0))
 ```
 
----
-
-### Database Layer
-The database implementation fetches a single random fact from the PostgreSQL database.
-
-#### Steps:
-1. Update the `get_fact()` method in `get_fact.py`.
+2. P4.4 Update the `create_route()` method in `create_fact.py`.
 
 ```python
-def get_fact() -> Fact:
-    provider = PostgresConnectionProvider()
-    with provider.cursor() as cur:    #TASK
-        cur.execute("SELECT id, fact, category, likes, dislikes FROM facts ORDER BY RANDOM() LIMIT 1;")
-        result = cur.fetchone()
-        if result:                                      #TASK
-            return Fact(id=result[0], fact=result[1], category=result[2], likes=result[3], dislikes=result[4])
-        else:                                           #TASK
-            return Fact(id=None, fact="No facts found.", category="none", likes=0, dislikes=0)
+def create_route():
+    if request.method == "GET":
+        return render_template("create.html")
+    if request.method == "POST":
+        fact_text = request.form.get("fact_text")
+        category = request.form.get("category") # TASK
+        if not fact_text:
+            return "Fact text is required", 400
+        fact_create_entity = create_fact(fact_text, category)
+        return render_template("create.html", random_fact=fact_create_entity.fact, category=fact_create_entity.category) # TASK
 ```
 
 ---
 
-### Unit Tests
+### Unit Tests (P4.5)
 1. Add unit tests to cover the fact filtering logic.
 2. Place tests in the same directory as the original file, following the convention `filename_test.py`.
 3. Reference the given happy path & unit test guide located in the same folder and encourage students to think about negative cases to improve test coverage.
@@ -647,9 +678,9 @@ def get_fact() -> Fact:
 ---
 
 ### HTML Integration
-1. Add HTML in order to create a form, which will be used to enter in the fact data.
+Add HTML in order to create a form, which will be used to enter in the fact data.
 
-In `templates/generate.html`:
+1. P4.6 In `templates/generate.html`:
 ```html
 <!DOCTYPE html>
 <html>
@@ -785,8 +816,76 @@ In `templates/generate.html`:
     </script>
 </body>
 </html>
-
 ```
 2. Visit `http://127.0.0.1:5000/generate` and your fact should appear with a category.
 
+3. P4.7 In `templates/create.html`:
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create a New Fact</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="page-container create-container">
+        <!-- Navbar -->
+        {% include './partials/navbar.html' %}
 
+        <div class="main-container">
+            <h1>Create a New Fact</h1>
+
+            <div class="create-fact-container" id="createForm">
+                <form action="/create" method="POST">
+                    <textarea name="fact_text" placeholder="Enter your fact here..." required></textarea>
+                    <textarea name="category" placeholder="Enter category (e.g. science, animals)" required></textarea>
+                    <button type="submit" class="fact-generator-button">Submit</button>
+                </form>
+            </div>
+
+            {% if random_fact %}
+            <div id="factDisplay">
+                <div class="fact-container">
+                    <p>New fact created:</p>
+                    <strong>{{ random_fact }}</strong>
+                    {% if category %}
+                    <p>Category: <strong>{{ category }}</strong></p>
+                    {% endif %}
+                </div>
+                <button type="button" class="fact-generator-button" onclick="showCreateForm()">Create New Fact</button>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Footer -->
+        {% include './partials/footer.html' %}
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const factDisplay = document.getElementById('factDisplay');
+            const createForm = document.getElementById('createForm');
+
+            if (factDisplay) {
+                createForm.style.display = 'none';
+                factDisplay.style.display = 'block';
+            }
+        });
+
+        function showCreateForm() {
+            const factDisplay = document.getElementById('factDisplay');
+            const createForm = document.getElementById('createForm');
+            const textarea = createForm.querySelector('textarea');
+
+            factDisplay.style.display = 'none';
+            createForm.style.display = 'block';
+
+            textarea.value = '';
+            textarea.focus();
+        }
+    </script>
+</body>
+</html>
+```
+
+4. Visit `http://127.0.0.1:5000/create` and you should be able to create a fact with a category.

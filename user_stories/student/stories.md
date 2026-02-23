@@ -9,8 +9,6 @@
 # P0: Random Fun Fact Generator
 As an engineer, I want to be able to get a random fun fact from a database, so that I can share them with my team.
 
----
-
 ## Implementation Details
 
 ### Database Layer
@@ -58,19 +56,14 @@ Some unit tests have been implemented for you as an example, you may not need to
    - Place tests in the same directory as the file being tested
    - PowerPoint: Why would we want unit tests to validate functions are working correctly as a software development team?
 
----
-
 # P1: Random Fun Fact Creator
 As an engineer, I want to be able to create my own fun facts, so that I can expand the fact list and never run out of new ones.
 
----
 ## Implementation Details
 
 ### Database Layer
 #### Steps:
 **P1.1 Implement the create_fact function** in `database/create_fact.py`:
-   - Import the PostgresConnectionProvider from database/provider.py
-   - Import the Fact class from fact.py
    - Accept a fact_text parameter
    - Execute a SQL query to insert the new fact
    - Use RETURNING clause to get the new fact's ID
@@ -78,10 +71,9 @@ As an engineer, I want to be able to create my own fun facts, so that I can expa
 
 ---
 
-
 ### HTTP Handler (REST)
 #### Steps:
-**P1.2 EDIT the create_route function** in `rest/create_fact.py`:
+**P1.2 Edit the create_route function** in `rest/create_fact.py`:
    - Handle both GET and POST requests in the same function
    - For GET requests: render a form template
    - For POST requests: extract the fact text from the form data
@@ -106,8 +98,6 @@ As an engineer, I want to be able to create my own fun facts, so that I can expa
 
 You can use the tests from the previous tasks as a guide here.
 
----
-
 # P2: Random Fun Fact Website Design
 As a UI/UX engineer, I want my random fun fact generator to provide an accessible user experience whilst maintaining a clear theme.
 
@@ -120,10 +110,10 @@ As a UI/UX engineer, I want my random fun fact generator to provide an accessibl
    - Ensure accessibility with proper contrast ratios
    - PowerPoint: What other considerations could we have made to improve user experience?
 
+---
+
 # P3: Random Fun Fact Voting System
 As an engineer, I want to be able to add a voting system to my fact service, so that I can track which facts my team like or dislike.
-
----
 
 ## Implementation Details
 
@@ -147,7 +137,7 @@ As an engineer, I want to be able to add a voting system to my fact service, so 
    - Return updated vote counts as JSON
    - Handle errors appropriately
 
-**Update the get_route function** in `rest/get_fact.py`:
+**P3.2 Update the get_route function** in `rest/get_fact.py`:
    - Include like and dislike counts in both JSON and template responses
    - Pass vote counts to the HTML template
 
@@ -177,12 +167,8 @@ As an engineer, I want to be able to add a voting system to my fact service, so 
    - Update vote counts dynamically without page refresh
    - Display current vote counts for each fact
 
----
-
 # P4: Random Fun Fact Filter
 As an engineer, I want to be able to filter facts by categories, so that I can tailor my facts to the audience.
-
----
 
 ## Implementation Details
 
@@ -215,6 +201,8 @@ First, we want to modify our existing workflows to include category information,
 **P4.5 Update the create_route function** in `rest/create_fact.py`:
    - Get the category data from the form
    - Pass the category data to the render_template function
+
+---
 
 ### Unit Tests
 #### Steps:
