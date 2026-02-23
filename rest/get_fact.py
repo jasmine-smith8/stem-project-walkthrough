@@ -1,4 +1,4 @@
-# Task P0.2, P4.3
+# Task P0.2, P4.4
 
 from flask import render_template, jsonify, request
 from database import get_fact
@@ -15,8 +15,8 @@ def get_route():
             "fact": fact.fact,
             "likes": getattr(fact, "likes", 0),
             "dislikes": getattr(fact, "dislikes", 0) 
-            # TODO: (Task P4.3) Add category
+            # TODO: (Task P4.4) Add category
         })
     
     return render_template("generate.html") # Render the HTML template and pass the fact data to it
-    # TODO: (Task P4.3) Add category data
+    # TODO: (Task P4.4) Add category data

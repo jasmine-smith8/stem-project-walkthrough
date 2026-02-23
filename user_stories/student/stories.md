@@ -199,31 +199,36 @@ First, we want to modify our existing workflows to include category information,
    - Modify the SQL query to include the category column
    - Update the Fact object creation to include category information
 
+**P4.3 Update the Fact entity** in `fact.py`:
+   - Add category as an input parameter
+   - Store category information as an instance variable
+   - Add category information to the string representation
+
 ---
 
 ### HTTP Handler (REST)
 #### Steps:
-**P4.3 Update the get_route function** in `rest/get_fact.py`:
+**P4.4 Update the get_route function** in `rest/get_fact.py`:
    - Include category information in JSON responses
    - Pass category data to the HTML template
 
-**P4.4 Update the create_route function** in `rest/create_fact.py`:
+**P4.5 Update the create_route function** in `rest/create_fact.py`:
    - Get the category data from the form
    - Pass the category data to the render_template function
 
 ### Unit Tests
 #### Steps:
-**P4.3 Update the unit tests**:
+**P4.6 Update the unit tests**:
    - Update any implemented unit tests to include the addition of a category field.
 ---
 
 ### HTML Integration
-**P4.4 Update the generate template** in `templates/generate.html`:
+**P4.7 Update the generate template** in `templates/generate.html`:
    - Display the fact category in the user interface
    - Update JavaScript to handle category information when fetching new facts
    - Style the category display appropriately
 
-**P4.5 Update the create template** in `templates/create.html`:
+**P4.8 Update the create template** in `templates/create.html`:
    - Add a category textarea to the input form.
    - Display the fact category in the user interface
 ---
