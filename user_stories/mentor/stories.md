@@ -65,12 +65,6 @@ def create_app():
                 static_folder='../static')
     app.add_url_rule("/", view_func=home_route, methods=["GET"])
     app.add_url_rule("/generate", view_func=get_route, methods=["GET"])
-
-    # Print all registered routes
-    print("Registered routes:")
-    for rule in app.url_map.iter_rules():
-        print(f"{rule} -> {rule.methods}")
-    return app
 ```
 2. Visit `http://127.0.0.1:5000/generate` on localhost to see a fact.
 

@@ -1,9 +1,10 @@
 # Task P0.2, P4.3
 
-# Import necessary modules
+from flask import render_template, jsonify, request
+from database import get_fact
 
 def get_route():
-    # Call database function to get a random fact
+    # TODO: (Task P0.2) Call database function to get a random fact
 
     # Check if the client wants JSON response based on query parameters
     wants_json = request.args.get("json") in ("1", "true", "True")
