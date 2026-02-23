@@ -20,8 +20,6 @@ You can complete the [SQL worksheet](../../database/worksheet.md) before moving 
 
 #### Steps:
 **P0.1 Implement the get_fact function** in `database/get_fact.py`:
-   - Import the PostgresConnectionProvider from `database/provider.py`
-   - Import the Fact class from `fact.py`
    - Execute a SQL query to select a random fact from the facts table
    - Return a Fact object with the retrieved data, or a "No facts found" message if empty
 
@@ -34,7 +32,6 @@ You can complete the [HTTP worksheet](../../rest/worksheet.md) before moving on 
 
 #### Steps:
 **P0.2 Implement the get_route function** in `rest/get_fact.py`:
-   - Import the necessary Flask modules (request, jsonify, render_template)
    - Update the function that calls the database `get_fact` function
    - Return either JSON data or render an HTML template with the fact
    
