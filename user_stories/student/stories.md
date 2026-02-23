@@ -175,7 +175,6 @@ As an engineer, I want to be able to add a voting system to my fact service, so 
 
 ### HTML Integration
 **P3.5 Update the generate template** in `templates/generate.html`:
-   - Add like and dislike buttons with vote counts
    - Include JavaScript to handle vote button clicks
    - Update vote counts dynamically without page refresh
    - Display current vote counts for each fact

@@ -1,5 +1,5 @@
 class Fact:
-    def __init__(self, id: int, fact: str, category: str, likes: int = 0, dislikes: int = 0):
+    def __init__(self, id: int, fact: str, category: str = None, likes: int = 0, dislikes: int = 0):
         self.id = id
         self.fact = fact
         self.likes = likes
