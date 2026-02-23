@@ -1,6 +1,7 @@
 # Task P0.1, P4.1
 
-# TODO: Import necessary modules
+from fact import Fact
+from .provider import PostgresConnectionProvider
 
 def get_fact() -> Fact:
     provider = PostgresConnectionProvider()
