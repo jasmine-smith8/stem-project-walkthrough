@@ -215,6 +215,7 @@ def create_app():
     app.add_url_rule("/", view_func=home_route, methods=["GET"])
     app.add_url_rule("/generate", view_func=get_route, methods=["GET"])
     app.add_url_rule("/create", view_func=create_route, methods=["GET","POST"]) # TASK
+    return app
 ```
 2. Visit `http://127.0.0.1:5000/create` on localhost to see a fact.
 
