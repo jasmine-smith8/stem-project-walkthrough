@@ -133,9 +133,9 @@ As an engineer, I want to be able to add a voting system to my fact service, so 
 ### Database Layer
 #### Steps:
 **P3.1 Create the vote_fact function** in `database/vote_fact.py`:
-   - Accept fact_id and vote_type parameters
    - Update the appropriate vote count (likes or dislikes) in the database
    - Validate the vote_type parameter
+   - Retrieve the updated Fact from the database
    - Return the updated Fact object with current vote counts
    - Handle cases where the fact doesn't exist
 
@@ -144,7 +144,6 @@ As an engineer, I want to be able to add a voting system to my fact service, so 
 ### HTTP Handler (REST)
 #### Steps:
 **P3.2 Create the vote_route function** in `rest/vote_fact.py`:
-   - Handle POST requests with JSON data
    - Extract fact_id and vote_type from the request
    - Call the database vote_fact function
    - Return updated vote counts as JSON
