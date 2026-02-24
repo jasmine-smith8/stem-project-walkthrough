@@ -17,18 +17,16 @@
             </div>
             <div class="voting-container">
             <div class="vote-section">
-                <!-- TODO: Add the like button and call JavaScript function to update the vote count -->
                 <button class="vote-button like-button" onclick="">
                     <img src="{{ url_for('static', filename='images/icons/thumbs-up.jpg') }}" alt="Like" class="vote-icon">
                 </button>
-                <!-- TODO: Display the number of likes for the fact with the given ID -->
+                <span id="like-count-{{ random_fact_id }}" class="vote-count">{{ random_fact_likes }}</span>
             </div>
             <div class="vote-section">
-                <!-- TODO: Add the dislike button and call JavaScript function to update the vote count -->
                 <button class="vote-button dislike-button" onclick="">
                     <img src="{{ url_for('static', filename='images/icons/thumbs-up.jpg') }}" alt="Dislike" class="vote-icon">
                 </button>
-                <!-- TODO: Display the number of dislikes for the fact with the given ID -->
+                <span id="dislike-count-{{ random_fact_id }}" class="vote-count">{{ random_fact_dislikes }}</span>
             </div>
             </div>
             <button class="fact-generator-button" onclick="getNewFact()">

@@ -4,7 +4,7 @@ from flask import render_template, jsonify, request
 from database import get_fact
 
 def get_route():
-    # TODO: (Task P0.2) Call database function to get a random fact
+    fact = None # TODO: (Task P0.2) Call database function to get a random fact
 
     # Check if the client wants JSON response based on query parameters
     wants_json = request.args.get("json") in ("1", "true", "True")
@@ -14,9 +14,15 @@ def get_route():
             "id": getattr(fact, "id", None),
             "fact": fact.fact,
             "likes": getattr(fact, "likes", 0),
-            "dislikes": getattr(fact, "dislikes", 0) 
+            "dislikes": getattr(fact, "dislikes", 0)
             # TODO: (Task P4.4) Add category
         })
-    
-    return render_template("generate.html") # Render the HTML template and pass the fact data to it
+    # Render the HTML template and pass the fact data to it
     # TODO: (Task P4.4) Add category data
+    return render_template(
+        "generate.html",
+        None, #TODO: Update here to pass the fact data to the template
+        None,
+        None,
+        None
+    )

@@ -1,7 +1,7 @@
 # Task P4.3
 
 class Fact:
-    def __init__(self, id: int, fact: str, likes: int = 0, dislikes: int = 0): # TODO: Add category parameter to the constructor
+    def __init__(self, id: int, fact: str, category: str = None, likes: int = 0, dislikes: int = 0):
         self.id = id
         self.fact = fact
         self.likes = likes

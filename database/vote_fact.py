@@ -1,6 +1,7 @@
 # Task P3.1
 
-# TODO: Import necessary modules
+from fact import Fact
+from .provider import PostgresConnectionProvider
 
 def vote_fact(fact_id: int, vote_type: str) -> Fact:
     provider = PostgresConnectionProvider()
@@ -19,6 +20,7 @@ def vote_fact(fact_id: int, vote_type: str) -> Fact:
         if result:
             return Fact() # TODO: Create and return a Fact object using the retrieved data
         else:
+            return 
             # TODO: Raise an error if the fact result does not exist in the database
             return
             
