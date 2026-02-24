@@ -183,8 +183,8 @@ def create_fact(fact_text: str) -> Fact:
     provider = PostgresConnectionProvider()
     with provider.cursor() as cur:
         cur.execute(
-            "INSERT INTO facts (fact) VALUES (%s) RETURNING id, fact;",
-            (fact_text,)
+            "INSERT INTO facts (fact) VALUES (%s, %s) RETURNING id, fact;",
+            (fact_text)
         )
         result = cur.fetchone()
         provider.commit()
@@ -215,6 +215,11 @@ def create_app():
     app.add_url_rule("/", view_func=home_route, methods=["GET"])
     app.add_url_rule("/generate", view_func=get_route, methods=["GET"])
     app.add_url_rule("/create", view_func=create_route, methods=["GET","POST"]) # TASK
+
+    # Print all registered routes
+    print("Registered routes:")
+    for rule in app.url_map.iter_rules():
+        print(f"{rule} -> {rule.methods}")
     return app
 ```
 2. Visit `http://127.0.0.1:5000/create` on localhost to see a fact.
@@ -230,6 +235,77 @@ def create_app():
 1. Add unit tests to cover the create fact logic.
 2. Place tests in the same directory as the original file, following the convention `filename_test.py`.
 3. Reference the given happy path & unit test guide located in the same folder and encourage students to think about negative cases to improve test coverage.
+
+---
+
+### HTML Integration
+1. Add HTML in order to create a form, which will be used to enter in the fact data.
+
+In `templates/create.html`:
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create a New Fact</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="page-container create-container">
+        <!-- Navbar -->
+        {% include './partials/navbar.html' %}
+
+        <div class="main-container">
+            <h1>Create a New Fact</h1>
+
+            <div class="create-fact-container" id="createForm">
+                <form action="/create" method="POST">
+                    <textarea name="fact_text" placeholder="Enter your fact here..." required></textarea>
+                    <button type="submit" class="fact-generator-button">Submit</button>
+                </form>
+            </div>
+
+            {% if random_fact %}
+            <div id="factDisplay">
+                <div class="fact-container">
+                    <p>New fact created:</p>
+                    <strong>{{ random_fact }}</strong>
+                </div>
+                <button type="button" class="fact-generator-button" onclick="showCreateForm()">Create New Fact</button>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Footer -->
+        {% include './partials/footer.html' %}
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const factDisplay = document.getElementById('factDisplay');
+            const createForm = document.getElementById('createForm');
+
+            if (factDisplay) {
+                createForm.style.display = 'none';
+                factDisplay.style.display = 'block';
+            }
+        });
+
+        function showCreateForm() {
+            const factDisplay = document.getElementById('factDisplay');
+            const createForm = document.getElementById('createForm');
+            const textarea = createForm.querySelector('textarea');
+
+            factDisplay.style.display = 'none';
+            createForm.style.display = 'block';
+
+            textarea.value = '';
+            textarea.focus();
+        }
+    </script>
+</body>
+</html>
+```
+2. Visit `http://127.0.0.1:5000/create` to see the form.
 
 # P2: Random Fun Fact Website Design
 As a UI/UX engineer, I want my random fun fact generator to provide an accessible user experience whilst maintaining a clear theme.
