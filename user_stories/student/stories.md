@@ -185,7 +185,6 @@ First, we want to modify our existing workflows to include category information,
    - Update the Fact object creation to include category information
 
 **P4.3 Update the Fact entity** in `fact.py`:
-   - Add category as an input parameter
    - Store category information as an instance variable
    - Add category information to the string representation
 
