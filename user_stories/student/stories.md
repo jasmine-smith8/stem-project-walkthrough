@@ -72,11 +72,8 @@ As an engineer, I want to be able to create my own fun facts, so that I can expa
 ### Database Layer
 #### Steps:
 **P1.1 Implement the create_fact function** in `database/create_fact.py`:
-   - Import the PostgresConnectionProvider from database/provider.py
-   - Import the Fact class from fact.py
    - Accept a fact_text parameter
    - Execute a SQL query to insert the new fact
-   - Use RETURNING clause to get the new fact's ID
    - Return a Fact object with the new fact data
 
 ---
