@@ -64,8 +64,11 @@ As an engineer, I want to be able to create my own fun facts, so that I can expa
 ### Database Layer
 #### Steps:
 **P1.1 Implement the create_fact function** in `database/create_fact.py`:
+   - Import the PostgresConnectionProvider from database/provider.py
+   - Import the Fact class from fact.py
    - Accept a fact_text parameter
    - Execute a SQL query to insert the new fact
+   - Use RETURNING clause to get the new fact's ID
    - Return a Fact object with the new fact data
 
 ---
@@ -119,9 +122,9 @@ As an engineer, I want to be able to add a voting system to my fact service, so 
 ### Database Layer
 #### Steps:
 **P3.1 Create the vote_fact function** in `database/vote_fact.py`:
-   - Accept fact_id and vote_type parameters
    - Update the appropriate vote count (likes or dislikes) in the database
    - Validate the vote_type parameter
+   - Retrieve the updated Fact from the database
    - Return the updated Fact object with current vote counts
    - Handle cases where the fact doesn't exist
 
@@ -130,7 +133,6 @@ As an engineer, I want to be able to add a voting system to my fact service, so 
 ### HTTP Handler (REST)
 #### Steps:
 **P3.2 Create the vote_route function** in `rest/vote_fact.py`:
-   - Handle POST requests with JSON data
    - Extract fact_id and vote_type from the request
    - Call the database vote_fact function
    - Return updated vote counts as JSON

@@ -156,8 +156,8 @@ def create_fact(fact_text: str) -> Fact:
     provider = PostgresConnectionProvider()
     with provider.cursor() as cur:
         cur.execute(
-            "INSERT INTO facts (fact) VALUES (%s) RETURNING id, fact;",
-            (fact_text,)
+            "INSERT INTO facts (fact) VALUES (%s, %s) RETURNING id, fact;",
+            (fact_text)
         )
         result = cur.fetchone()
         provider.commit()
@@ -339,13 +339,13 @@ def vote_fact(fact_id: int, vote_type: str) -> Fact:
             raise ValueError("Invalid vote type")
 
         cur.execute(
-            "SELECT id, fact, category, likes, dislikes FROM facts WHERE id = %s;",
+            "SELECT id, fact, likes, dislikes FROM facts WHERE id = %s;",
             (fact_id,)
         )
         result = cur.fetchone()
         provider.commit()
         if result:
-            return Fact(id=result[0], fact=result[1], category=result[2], likes=result[3], dislikes=result[4])
+            return Fact(id=result[0], fact=result[1], likes=result[3], dislikes=result[4])
         else:
             raise ValueError("Fact not found")
 ```
@@ -415,6 +415,7 @@ from flask import Flask
 from .home import home_route
 from .get_fact import get_route
 from .create_fact import create_route
+from .vote_fact import vote_route
 
 def create_app():
     app = Flask(__name__,
@@ -425,10 +426,6 @@ def create_app():
     app.add_url_rule("/create", view_func=create_route, methods=["GET","POST"]) 
     app.add_url_rule("/api/vote", view_func=vote_route, methods=["POST"]) # TASK
 
-    # Print all registered routes
-    print("Registered routes:")
-    for rule in app.url_map.iter_rules():
-        print(f"{rule} -> {rule.methods}")
     return app
 ```
 
