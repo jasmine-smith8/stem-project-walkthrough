@@ -179,7 +179,7 @@ The database implementation fetches a single random fact from the PostgreSQL dat
 1. Implement the `create_fact()` method in `create_fact.py`.
 
 ```python
-def create_fact(fact_text: str) -> Fact:
+def create_fact(fact_text: str) -> Fact: # TASK
     provider = PostgresConnectionProvider()
     with provider.cursor() as cur:
         cur.execute(
@@ -413,6 +413,35 @@ def vote_fact(fact_id: int, vote_type: str) -> Fact:
             raise ValueError("Fact not found")
 ```
 
+2. Update the `get_fact()` method in `get_fact.py`.
+
+```python
+def get_fact() -> Fact:
+    provider = PostgresConnectionProvider()
+    with provider.cursor() as cur:    #TASK
+        cur.execute("SELECT id, fact, likes, dislikes FROM facts ORDER BY RANDOM() LIMIT 1;")
+        result = cur.fetchone()
+        if result:                                      #TASK
+            return Fact(id=result[0], fact=result[1], likes=result[3], dislikes=result[4])
+        else:                                           #TASK
+            return Fact(id=None, fact="No facts found.", likes=0, dislikes=0)
+```
+
+3. Update the `create_fact()` method in `create_fact.py`.
+
+```python
+def create_fact(fact_text: str, category: str) -> Fact:
+    provider = PostgresConnectionProvider()
+    with provider.cursor() as cur:
+        cur.execute(
+            "INSERT INTO facts (fact) VALUES (%s) RETURNING id, fact, category, likes, dislikes;",    # TASK
+            (fact_text,)   # TASK
+        )
+        result = cur.fetchone()
+        provider.commit()
+        return Fact(id=result[0], fact=result[1], likes=result[3] or 0, dislikes=result[4] or 0)    # TASK
+```
+
 ---
 
 ### REST Router
@@ -613,11 +642,11 @@ def get_route():
             "fact": fact.fact,
             "category": getattr(fact, "category", None), #TASK
             "likes": getattr(fact, "likes", 0),
-            "dislikes": getattr(fact, "dislikes", 0) 
+            "dislikes": getattr(fact, "dislikes", 0)
         })
     return render_template("generate.html",
                          random_fact=fact.fact,
-                         category=fact.category, #TASK
+                         random_fact_category=fact.category, #TASK
                          random_fact_id=fact.id,
                          random_fact_likes=getattr(fact, "likes", 0),
                          random_fact_dislikes=getattr(fact, "dislikes", 0))
@@ -640,7 +669,22 @@ def get_fact() -> Fact:
         if result:                                      #TASK
             return Fact(id=result[0], fact=result[1], category=result[2], likes=result[3], dislikes=result[4])
         else:                                           #TASK
-            return Fact(id=None, fact="No facts found.", category="none", likes=0, dislikes=0)
+            return Fact(id=None, fact="No facts found.", category=None, likes=0, dislikes=0)
+```
+
+2. P4.2 Update the `create_fact()` method in `create_fact.py`.
+
+```python
+def create_fact(fact_text: str, category: str) -> Fact: # TASK
+    provider = PostgresConnectionProvider()
+    with provider.cursor() as cur:
+        cur.execute(
+            "INSERT INTO facts (fact, category) VALUES (%s, %s) RETURNING id, fact, category, likes, dislikes;",    # TASK
+            (fact_text, category)   # TASK
+        )
+        result = cur.fetchone()
+        provider.commit()
+        return Fact(id=result[0], fact=result[1], category=result[2], likes=result[3] or 0, dislikes=result[4] or 0)    # TASK
 ```
 
 ---
@@ -671,7 +715,7 @@ In `templates/generate.html`:
         <div class="main-container">
             <h1>Random Fact Generator</h1>
             <div class="fact-container">
-                <p>Your random <strong id="fact-category">{{ category }}</strong> fact is: </p>
+                <p>Your random <strong id="fact-category">{{ random_fact_category }}</strong> fact is: </p>
                 <strong id="fact-text">{{ random_fact }}</strong>
             </div>
             <div class="voting-container">
@@ -795,4 +839,73 @@ In `templates/generate.html`:
 ```
 2. Visit `http://127.0.0.1:5000/generate` and your fact should appear with a category.
 
+3. P4.7 In `templates/create.html`:
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create a New Fact</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="page-container create-container">
+        <!-- Navbar -->
+        {% include './partials/navbar.html' %}
 
+        <div class="main-container">
+            <h1>Create a New Fact</h1>
+
+            <div class="create-fact-container" id="createForm">
+                <form action="/create" method="POST">
+                    <textarea name="fact_text" placeholder="Enter your fact here..." required></textarea>
+                    <textarea name="category" placeholder="Enter category (e.g. science, animals)" required></textarea>
+                    <button type="submit" class="fact-generator-button">Submit</button>
+                </form>
+            </div>
+
+            {% if random_fact %}
+            <div id="factDisplay">
+                <div class="fact-container">
+                    <p>New fact created:</p>
+                    <strong>{{ random_fact.fact }}</strong>
+                    {% if category %}
+                    <p>Category: <strong>{{ random_fact_category }}</strong></p>
+                    {% endif %}
+                </div>
+                <button type="button" class="fact-generator-button" onclick="showCreateForm()">Create New Fact</button>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Footer -->
+        {% include './partials/footer.html' %}
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const factDisplay = document.getElementById('factDisplay');
+            const createForm = document.getElementById('createForm');
+
+            if (factDisplay) {
+                createForm.style.display = 'none';
+                factDisplay.style.display = 'block';
+            }
+        });
+
+        function showCreateForm() {
+            const factDisplay = document.getElementById('factDisplay');
+            const createForm = document.getElementById('createForm');
+            const textarea = createForm.querySelector('textarea');
+
+            factDisplay.style.display = 'none';
+            createForm.style.display = 'block';
+
+            textarea.value = '';
+            textarea.focus();
+        }
+    </script>
+</body>
+</html>
+```
+
+4. Visit `http://127.0.0.1:5000/create` and you should be able to create a fact with a category.

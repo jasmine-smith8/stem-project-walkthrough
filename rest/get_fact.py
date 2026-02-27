@@ -14,9 +14,9 @@ def get_route():
         return jsonify({
             "id": getattr(fact, "id", None),
             "fact": fact.fact,
+            # TODO: (Task P4.3) Add category
             "likes": getattr(fact, "likes", 0),
             "dislikes": getattr(fact, "dislikes", 0) 
-            # TODO: (Task P4.3) Add category
         })
     # Render the HTML template and pass the fact data to it
     # TODO: (Task P4.3) Add category data

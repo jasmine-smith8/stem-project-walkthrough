@@ -66,6 +66,10 @@
                 setTimeout(() => {
                     factText.textContent = data.fact;
                     factText.style.opacity = '1';
+
+                    // Update the category
+                    const factCategory = document.getElementById('fact-category');
+                    factCategory.textContent = data.category;
                     
                     // Update voting counts and button attributes for the new fact
                     const likeButton = document.querySelector('.like-button');
