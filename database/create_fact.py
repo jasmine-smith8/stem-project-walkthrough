@@ -3,7 +3,7 @@
 from fact import Fact
 from .provider import PostgresConnectionProvider
 
-# TODO: (Task P1.1) Add fact_test parameter
+# TODO: (Task P1.1) Add fact_text parameter
 # TODO: (Task P4.2) Add category parameter
 def create_fact() -> Fact:
     provider = PostgresConnectionProvider()
