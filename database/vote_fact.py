@@ -22,5 +22,4 @@ def vote_fact(fact_id: int, vote_type: str) -> Fact:
         else:
             return 
             # TODO: Raise an error if the fact result does not exist in the database
-            return
             
