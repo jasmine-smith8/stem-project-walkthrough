@@ -156,8 +156,8 @@ def create_fact(fact_text: str) -> Fact:
     provider = PostgresConnectionProvider()
     with provider.cursor() as cur:
         cur.execute(
-            "INSERT INTO facts (fact) VALUES (%s, %s) RETURNING id, fact;",
-            (fact_text)
+            "INSERT INTO facts (fact) VALUES (%s) RETURNING id, fact;",
+            (fact_text,)
         )
         result = cur.fetchone()
         provider.commit()
@@ -209,11 +209,6 @@ def create_app():
     app.add_url_rule("/", view_func=home_route, methods=["GET"])
     app.add_url_rule("/generate", view_func=get_route, methods=["GET"])
     app.add_url_rule("/create", view_func=create_route, methods=["GET","POST"]) # TASK
-
-    # Print all registered routes
-    print("Registered routes:")
-    for rule in app.url_map.iter_rules():
-        print(f"{rule} -> {rule.methods}")
     return app
 ```
 2. Visit `http://127.0.0.1:5000/create` on localhost to see a fact.
