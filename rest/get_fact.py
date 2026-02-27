@@ -1,11 +1,10 @@
-# Task P0.2, P4.3
+# Task P0.2, P4.4
 
-from flask import request, jsonify, render_template
-#TODO: (Task P0.2) Import the get_fact function from the database module
+from flask import render_template, jsonify, request
+from database import get_fact
 
 def get_route():
-    # Call database function to get a random fact
-    fact = None #TODO: Call the get_fact function here
+    fact = None # TODO: (Task P0.2) Call database function to get a random fact
 
     # Check if the client wants JSON response based on query parameters
     wants_json = request.args.get("json") in ("1", "true", "True")
@@ -19,12 +18,11 @@ def get_route():
             "dislikes": getattr(fact, "dislikes", 0) 
         })
     # Render the HTML template and pass the fact data to it
-    # TODO: (Task P4.3) Add category data
+    # TODO: (Task P4.4) Add category data
     return render_template(
         "generate.html",
         None, #TODO: Update here to pass the fact data to the template
         None,
         None,
         None
-    ) 
-
+    )
