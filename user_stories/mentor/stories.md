@@ -664,7 +664,7 @@ def create_route():
         category = request.form.get("category") # TASK
         if not fact_text:
             return "Fact text is required", 400
-        fact_create_entity = create_fact(fact_text, category)
+        fact_create_entity = create_fact(fact_text, category) # TASK
         return render_template("create.html", random_fact=fact_create_entity.fact, category=fact_create_entity.category) # TASK
 ```
 
