@@ -152,7 +152,7 @@ The database implementation fetches a single random fact from the PostgreSQL dat
 1. P1.1 Implement the `create_fact()` method in `create_fact.py`.
 
 ```python
-def create_fact(fact_text: str) -> Fact:
+def create_fact(fact_text: str) -> Fact: # TASK
     provider = PostgresConnectionProvider()
     with provider.cursor() as cur:
         cur.execute(
@@ -404,6 +404,72 @@ def get_route():
 
 ---
 
+### Database Layer
+The database implementation fetches a single random fact from the PostgreSQL database.
+
+#### Steps:
+1. Implement the `vote_fact()` method in `vote_fact.py`.
+
+```python
+def vote_fact(fact_id: int, vote_type: str) -> Fact:
+    provider = PostgresConnectionProvider()
+    with provider.cursor() as cur:
+        if vote_type == "like":
+            cur.execute(
+                "UPDATE facts SET likes = likes + 1 WHERE id = %s;",
+                (fact_id,)
+            )
+        elif vote_type == "dislike":
+            cur.execute(
+                "UPDATE facts SET dislikes = dislikes + 1 WHERE id = %s;",
+                (fact_id,)
+            )
+        else:
+            raise ValueError("Invalid vote type")
+
+        cur.execute(
+            "SELECT id, fact, category, likes, dislikes FROM facts WHERE id = %s;",
+            (fact_id,)
+        )
+        result = cur.fetchone()
+        provider.commit()
+        if result:
+            return Fact(id=result[0], fact=result[1], category=result[2], likes=result[3], dislikes=result[4])
+        else:
+            raise ValueError("Fact not found")
+```
+
+2. Update the `get_fact()` method in `get_fact.py`.
+
+```python
+def get_fact() -> Fact:
+    provider = PostgresConnectionProvider()
+    with provider.cursor() as cur:    #TASK
+        cur.execute("SELECT id, fact, likes, dislikes FROM facts ORDER BY RANDOM() LIMIT 1;")
+        result = cur.fetchone()
+        if result:                                      #TASK
+            return Fact(id=result[0], fact=result[1], likes=result[3], dislikes=result[4])
+        else:                                           #TASK
+            return Fact(id=None, fact="No facts found.", likes=0, dislikes=0)
+```
+
+3. Update the `create_fact()` method in `create_fact.py`.
+
+```python
+def create_fact(fact_text: str, category: str) -> Fact:
+    provider = PostgresConnectionProvider()
+    with provider.cursor() as cur:
+        cur.execute(
+            "INSERT INTO facts (fact) VALUES (%s) RETURNING id, fact, category, likes, dislikes;",    # TASK
+            (fact_text,)   # TASK
+        )
+        result = cur.fetchone()
+        provider.commit()
+        return Fact(id=result[0], fact=result[1], likes=result[3] or 0, dislikes=result[4] or 0)    # TASK
+```
+
+---
+
 ### REST Router
 #### Steps:
 1. P3.3 Add an `api/vote` route with a `POST` method to `router.py`. 
@@ -649,11 +715,11 @@ def get_route():
             "fact": fact.fact,
             "category": getattr(fact, "category", None), # TASK
             "likes": getattr(fact, "likes", 0),
-            "dislikes": getattr(fact, "dislikes", 0) 
+            "dislikes": getattr(fact, "dislikes", 0)
         })
     return render_template("generate.html",
                          random_fact=fact.fact,
-                         category=fact.category, # TASK
+                         random_fact_category=fact.category, #TASK
                          random_fact_id=fact.id,
                          random_fact_likes=getattr(fact, "likes", 0),
                          random_fact_dislikes=getattr(fact, "dislikes", 0))
@@ -702,7 +768,7 @@ Add HTML in order to create a form, which will be used to enter in the fact data
         <div class="main-container">
             <h1>Random Fact Generator</h1>
             <div class="fact-container">
-                <p>Your random <strong id="fact-category">{{ category }}</strong> fact is: </p>
+                <p>Your random <strong id="fact-category">{{ random_fact_category }}</strong> fact is: </p>
                 <strong id="fact-text">{{ random_fact }}</strong>
             </div>
             <div class="voting-container">
@@ -853,9 +919,9 @@ Add HTML in order to create a form, which will be used to enter in the fact data
             <div id="factDisplay">
                 <div class="fact-container">
                     <p>New fact created:</p>
-                    <strong>{{ random_fact }}</strong>
+                    <strong>{{ random_fact.fact }}</strong>
                     {% if category %}
-                    <p>Category: <strong>{{ category }}</strong></p>
+                    <p>Category: <strong>{{ random_fact_category }}</strong></p>
                     {% endif %}
                 </div>
                 <button type="button" class="fact-generator-button" onclick="showCreateForm()">Create New Fact</button>
