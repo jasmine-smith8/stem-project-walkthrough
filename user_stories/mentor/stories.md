@@ -625,7 +625,21 @@ def create_fact(fact_text: str, category: str) -> Fact:
         provider.commit()
         return Fact(id=result[0], fact=result[1], category=result[2], likes=result[3] or 0, dislikes=result[4] or 0)    # TASK
 ```
----
+
+3. P4.3 Update the `Fact` constructor in `fact.py`.
+
+```python
+class Fact:
+    def __init__(self, id: int, fact: str, category: str = None, likes: int = 0, dislikes: int = 0):
+        self.id = id
+        self.fact = fact
+        self.category = category
+        self.likes = likes
+        self.dislikes = dislikes
+        # TODO: Add category attribute to the Fact class
+
+    def __repr__(self):
+        return f"<Fact id={self.id} fact='{self.fact}' likes={self.likes}, dislikes={self.dislikes}" # TODO: Add category information to the string representation
 
 ### HTTP Handler (REST)
 The handler bridges the database layer and the UI layer, allowing the random fact generator page to display facts and fetch new ones without page refreshes. 
