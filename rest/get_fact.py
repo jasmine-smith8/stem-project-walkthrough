@@ -5,6 +5,8 @@ from database import get_fact
 
 def get_route():
     fact = None # TODO: (Task P0.2) Call database function to get a random fact
+    fact = get_fact()
+
 
     # Check if the client wants JSON response based on query parameters
     wants_json = request.args.get("json") in ("1", "true", "True")

@@ -63,19 +63,19 @@ DELETE /books/123
 ## Tasks
 ### Exercise 1
 Write the REST API URLs for these operations:
-1. Get all books
-2. Get a specific book (ID: 42)
-3. Add a new book
-4. Update book ID 42
-5. Delete book ID 42
-6. Get all books by a specific author
+1. Get all books -> GET /books/
+2. Get a specific book (ID: 42) GET /books/42
+3. Add a new book POST /book/
+4. Update book ID 42 PATCH /book/42
+5. Delete book ID 42 DELETE /book/42
+6. Get all books by a specific author GET /book/author
 ### Exercise 2
 Match each action with the correct HTTP method:
 
 | Action               | HTTP Method (GET/POST/PUT/DELETE) |
 | -------------------- | --------------------------------- |
-| View your profile    | _______                           |
-| Create a new account | _______                           |
-| Change your password | _______                           |
-| Delete your account  | _______                           |
-| Search for books     | _______                           |
+| View your profile    | GET____                           |
+| Create a new account | POST___                           |
+| Change your password | PATCH__                           |
+| Delete your account  | DELETE_                           |
+| Search for books     | GET____                           |
